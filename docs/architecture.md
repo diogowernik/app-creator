@@ -15,18 +15,19 @@ O shell não deve produzir arquivos grandes por `heredoc`, conhecer detalhes de 
 <app>/
 ├── api/
 │   ├── config/
-│   ├── users/
 │   ├── manage.py
 │   ├── pyproject.toml
 │   └── .env.example
 ├── web/
 │   ├── src/app/
 │   ├── src/components/
-│   ├── src/lib/
+│   ├── src/api/
+│   ├── src/server/
 │   ├── package.json
 │   └── .env.local.example
 ├── docs/
 ├── .github/workflows/ci.yml
+├── scripts/                # preparação e teste de integração
 ├── AGENTS.md
 └── README.md
 ```
@@ -59,6 +60,10 @@ A base do frontend será Next.js, React e TypeScript. Ela deve incluir:
 - testes do fluxo de autenticação.
 
 A fundação visual será pequena. Ela deve oferecer tokens e componentes básicos sem impor páginas ou decisões de produto do Holding.
+
+A primeira versão usa tokens CSS e controles nativos. Providers e bibliotecas
+visuais entram quando houver uso real. O usuário padrão do Django e os endpoints
+Djoser dispensam um app `users` vazio.
 
 ## Autenticação
 
@@ -115,3 +120,8 @@ O gerador deve:
 - usar chave insegura somente no desenvolvimento local;
 - falhar em produção quando uma configuração crítica estiver ausente;
 - terminar ao primeiro erro sem deixar uma geração apresentada como concluída.
+
+`--prepare` instala dependências e migra o banco local; não cria arquivos de
+ambiente nem usuários. Uma falha na cópia remove somente a pasta criada pela
+invocação; uma falha na preparação preserva o código e retorna erro para permitir
+retomada. O modo `migration` acrescenta documentação, sem importar dados.

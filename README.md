@@ -28,7 +28,7 @@ O App Creator deve servir a dois fluxos:
 - Um app já gerado é independente: atualizar o starter não altera projetos existentes silenciosamente.
 - A automação deve falhar com clareza e nunca sobrescrever uma pasta existente.
 
-## Estrutura planejada
+## Estrutura
 
 ```text
 app-creator/
@@ -45,17 +45,42 @@ app-creator/
     └── .github/            # CI do app gerado
 ```
 
-`create-app.sh` e `template/` serão adicionados nas próximas rodadas. Esta primeira rodada registra os limites da fundação antes de copiar código.
+O gerador já copia uma aplicação independente. O shell é apenas a entrada;
+`scripts/create_app.py` cuida da geração e `template/` contém os arquivos reais.
 
-## Interface pretendida
+## Criar uma aplicação
 
 ```bash
 ./create-app.sh meu-app
 ./create-app.sh meu-app --destination /caminho/dos/projetos
 ./create-app.sh meu-app --mode migration
+./create-app.sh meu-app --destination /caminho/dos/projetos --prepare
 ```
 
 O modo de migração não muda a arquitetura da aplicação. Ele apenas inclui documentação e checklists próprios da migração.
+
+Use um nome em minúsculas com números e hífens. O destino não pode existir,
+inclusive como arquivo ou link. O gerador não copia bancos, segredos, ambientes
+instalados ou Git. Registra a versão da fundação em `.app-creator.json`.
+
+Sem `--prepare`, a geração usa apenas Python e copia o código, sem instalar
+dependências. Com `--prepare`, instala os locks com uv/npm e migra o banco local.
+Os requisitos de Python/Node estão nos manifestos do template. Nenhum segredo
+ou usuário é criado automaticamente. Consulte o README do app para configurar
+ambientes, criar o primeiro usuário e iniciar os dois processos.
+
+Para um repositório já existente, como Logos, gere em outra pasta e integre os
+arquivos necessários. O gerador nunca sobrescreve a pasta existente.
+
+## Validar o starter
+
+```bash
+python3 -m unittest discover -s tests -v
+./create-app.sh teste-app --destination /tmp/app-creator-test --prepare
+```
+
+Depois execute as verificações do README gerado: testes Django, lint/tipos,
+testes frontend, build isolada e autenticação real entre Next e Django.
 
 ## Evolução planejada
 
@@ -78,7 +103,10 @@ As referências iniciais são Holding, Clareia e FinKidz. Holding é a principal
 - [Gerenciador de projetos](docs/project-manager.md)
 - [Versões e atualizações](docs/versioning.md)
 - [Roadmap](docs/roadmap.md)
+- [Fundação adotada](docs/foundation.md)
 
 ## Estado
 
-Projeto em fundação. Ainda não há um gerador executável.
+Primeira fundação implementada: template executável, gerador, autenticação,
+documentação de migração, testes e CI. Catálogo e painel de gerenciamento
+continuam no roadmap. O domínio do Logos será construído no próprio projeto.

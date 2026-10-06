@@ -1,48 +1,52 @@
 # Roadmap
 
+Primeira rodada concluída em 6 de outubro de 2026: fundação, template, gerador,
+validação local e documentação inicial do modo de migração. O modo de migração
+gera documentos para preencher; não examina nem importa dados automaticamente.
+
 ## 1. Fundação do projeto
 
 - [x] Criar o diretório do App Creator.
 - [x] Registrar arquitetura e limites do starter.
 - [x] Definir política de versões e atualização.
-- [ ] Escolher os arquivos mínimos do Holding que representam a fundação técnica.
+- [x] Escolher os arquivos mínimos do Holding que representam a fundação técnica.
 - [x] Registrar Holding, Clareia e FinKidz como projetos de referência.
 
 ## 2. Template executável
 
-- [ ] Criar o template Django/DRF sem domínios do Holding.
-- [ ] Criar o template Next.js/React/TypeScript.
-- [ ] Conectar login, logout e usuário atual.
-- [ ] Adicionar configuração de desenvolvimento e produção.
-- [ ] Adicionar testes mínimos e CI proporcional.
+- [x] Criar o template Django/DRF sem domínios do Holding.
+- [x] Criar o template Next.js/React/TypeScript.
+- [x] Conectar login, logout e usuário atual.
+- [x] Adicionar configuração de desenvolvimento e produção.
+- [x] Adicionar testes mínimos e CI proporcional.
 
 ## 3. Gerador
 
-- [ ] Criar `create-app.sh` como orquestrador fino.
-- [ ] Validar nome, slug e destino.
-- [ ] Recusar sobrescrita de diretório existente.
-- [ ] Copiar o template e substituir placeholders.
-- [ ] Preparar ambientes e executar migrações.
-- [ ] Exibir um resumo curto dos próximos comandos.
+- [x] Criar `create-app.sh` como orquestrador fino.
+- [x] Validar nome, slug e destino.
+- [x] Recusar sobrescrita de diretório existente.
+- [x] Copiar o template e substituir placeholders.
+- [x] Preparar ambientes e executar migrações.
+- [x] Exibir um resumo curto dos próximos comandos.
 
 ## 4. Validação
 
-- [ ] Gerar um projeto descartável do zero.
-- [ ] Validar autenticação ponta a ponta.
-- [ ] Validar testes, lint, tipos e builds.
-- [ ] Confirmar que o projeto gerado não depende do repositório do App Creator.
+- [x] Gerar um projeto descartável do zero.
+- [x] Validar autenticação ponta a ponta.
+- [x] Validar testes, lint, tipos e builds.
+- [x] Confirmar que o projeto gerado não depende do repositório do App Creator.
 
 ## 5. Migração de aplicações
 
-- [ ] Adicionar o modo `migration`.
-- [ ] Gerar inventário de funcionalidades do legado.
-- [ ] Gerar mapa de modelos e dados.
-- [ ] Gerar checklist de paridade funcional e visual.
-- [ ] Manter a implementação do domínio fora do gerador.
+- [x] Adicionar o modo `migration`.
+- [x] Gerar inventário de funcionalidades do legado.
+- [x] Gerar mapa de modelos e dados.
+- [x] Gerar checklist de paridade funcional e visual.
+- [x] Manter a implementação do domínio fora do gerador.
 
 ## 6. Catálogo e inspeção de projetos
 
-- [ ] Definir um manifesto opcional do App Creator dentro dos apps gerados.
+- [x] Definir um manifesto opcional do App Creator dentro dos apps gerados.
 - [ ] Cadastrar projetos existentes sem exigir que tenham sido gerados pelo starter.
 - [ ] Detectar stacks e versões a partir dos manifestos nativos.
 - [ ] Criar adaptadores iniciais para Django e Next.js.
