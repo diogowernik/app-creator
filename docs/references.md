@@ -17,6 +17,30 @@ Observar especialmente:
 
 Não importar modelos financeiros, fluxos de bancos, investimentos ou migrações do legado.
 
+## Logos — composição de trabalho
+
+Referência adicionada na rodada de planejamento de 7 de outubro de 2026.
+A consolidação visual será validada em Logos antes da transferência ao template.
+
+Observar especialmente:
+
+- painéis esquerdo e direito recolhíveis, independentes de seu conteúdo;
+- navegação com tamanho uniforme, peso moderado e cores neutras;
+- área central de trabalho confortável e ações discretas;
+- reaproveitamento dos cards, tema e cabeçalhos MUI da Holding;
+- remoção de definições locais ao migrar para componentes comuns.
+
+O [plano visual](frontend-foundation-plan.md) delimita a transferência. Projects,
+Collections, EPUB, conteúdo de menus e operações editoriais ficam em Logos.
+
+## Wtree — futuro consumidor
+
+O usuário indicou Wtree, atualmente no monorepo, como futuro app independente
+da mesma família e com possível evolução para DEX/CEX. Isso reforça a escolha
+de MUI + Geist, tema configurável e política comum de versões. Seu código não
+foi auditado nesta rodada. Recursos de exchange serão planejados no produto,
+sem inclusão antecipada no template.
+
 ## Clareia
 
 Referência de arquitetura disciplinada e documentação orientada à execução.

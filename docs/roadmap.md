@@ -44,6 +44,31 @@ gera documentos para preencher; não examina nem importa dados automaticamente.
 - [x] Gerar checklist de paridade funcional e visual.
 - [x] Manter a implementação do domínio fora do gerador.
 
+## 5.1. Fundação visual — próxima rodada
+
+Planejamento concluído em 7 de outubro de 2026; implementação pendente.
+Receber a base validada de Logos após sua consolidação com os padrões da
+Holding. Detalhes no [plano visual](frontend-foundation-plan.md).
+
+- [x] Definir origem, fronteiras e sequência da transferência.
+- [x] Confirmar MUI + Geist e refatoração direta da base visual.
+- [ ] Concluir a fundação visual global em Logos.
+- [ ] Integrar MUI/Emotion/Next com manifestos e locks compatíveis.
+- [ ] Transferir tema neutro, Geist e composições MUI da Holding/Logos.
+- [ ] Incluir shell com painéis opcionais e navegação de tamanho uniforme.
+- [ ] Adaptar layout, cabeçalho, login e estados aos componentes comuns.
+- [ ] Incluir guia portátil nos apps gerados.
+- [ ] Remover estilos particulares substituídos do template.
+- [ ] Validar geração limpa, independência, responsividade e autenticação.
+- [ ] Registrar versão e instruções para apps existentes.
+
+O conteúdo editorial de Logos e o domínio financeiro da Holding ficam fora
+do starter. Esta fundação é do template; o painel de gerenciamento abaixo
+continua sendo uma etapa distinta.
+
+Wtree foi indicado como futuro consumidor da mesma família. Migração e
+possível evolução para DEX/CEX serão planejadas separadamente em seu produto.
+
 ## 6. Catálogo e inspeção de projetos
 
 - [x] Definir um manifesto opcional do App Creator dentro dos apps gerados.

@@ -61,9 +61,27 @@ A base do frontend será Next.js, React e TypeScript. Ela deve incluir:
 
 A fundação visual será pequena. Ela deve oferecer tokens e componentes básicos sem impor páginas ou decisões de produto do Holding.
 
-A primeira versão usa tokens CSS e controles nativos. Providers e bibliotecas
-visuais entram quando houver uso real. O usuário padrão do Django e os endpoints
-Djoser dispensam um app `users` vazio.
+A primeira versão implementada usa tokens CSS e controles nativos. A próxima
+fundação, definida abaixo, substitui essa escolha por MUI e Geist. O usuário
+padrão do Django e os endpoints Djoser dispensam um app `users` vazio.
+
+### Evolução visual planejada
+
+Planejada em 7 de outubro de 2026, com implementação pendente: receber a base
+consolidada de Logos na sequência `Holding -> Logos -> App Creator`. Manter
+React/TypeScript e adotar MUI + Geist; reutilizar tema e composições da Holding,
+parametrizar identidade neutra e incluir navegação uniforme e shell com painéis
+recolhíveis opcionais. Usar controles MUI diretamente, removendo a base visual
+superada. Conteúdo e operações editoriais permanecem em Logos.
+
+O uso pessoal permite uma refatoração direta, sem infraestrutura de transição
+entre dois sistemas visuais. Outros apps da família, incluindo Wtree como
+futuro consumidor, receberão a mesma fundação por adoção explícita. Sua possível
+evolução para DEX/CEX é um domínio próprio, não uma exigência do starter.
+
+O [plano da fundação visual](frontend-foundation-plan.md) define arquivos,
+limites e validação em app gerado. O template incluirá um guia próprio, sem
+dependência de checkout ou runtime dos projetos de referência.
 
 ## Autenticação
 
