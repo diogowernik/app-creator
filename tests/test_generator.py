@@ -1,10 +1,12 @@
 import json
+import os
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from scripts.create_app import ROOT, create_app
+from scripts.create_app import ROOT, create_app, main
 
 
 class GeneratorTests(unittest.TestCase):
@@ -12,6 +14,38 @@ class GeneratorTests(unittest.TestCase):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
         self.destination = Path(self.directory.name)
+
+    def test_cli_prepares_by_default(self):
+        with patch("sys.argv", ["create-app", "ready-app", "--destination", str(self.destination)]), \
+                patch("scripts.create_app.prepare") as prepare:
+            main()
+        prepare.assert_called_once_with(self.destination.resolve() / "ready-app")
+
+    def test_cli_skip_setup_generates_only_files(self):
+        with patch("sys.argv", ["create-app", "files-app", "--destination", str(self.destination), "--skip-setup"]), \
+                patch("scripts.create_app.prepare") as prepare:
+            main()
+        prepare.assert_not_called()
+        self.assertTrue((self.destination / "files-app/api/manage.py").exists())
+
+    def test_setup_creates_env_files_and_preserves_existing_values(self):
+        app = create_app("setup-app", self.destination)
+        commands = self.destination / "commands"
+        commands.mkdir()
+        (app / ".venv/bin").mkdir(parents=True)
+        for executable in [commands / "uv", commands / "npm", app / ".venv/bin/python"]:
+            executable.write_text("#!/bin/sh\nexit 0\n")
+            executable.chmod(0o755)
+        environment = dict(os.environ, PATH=str(commands) + os.pathsep + os.environ["PATH"])
+        setup = ["bash", str(app / "scripts/setup.sh")]
+        subprocess.run(setup, env=environment, check=True, stdout=subprocess.DEVNULL)
+        files = [app / "api/.env", app / "web/.env.local"]
+        for path in files:
+            self.assertEqual(path.read_text(), Path(str(path) + ".example").read_text())
+            path.write_text("KEEP_EXISTING=value\n")
+        subprocess.run(setup, env=environment, check=True, stdout=subprocess.DEVNULL)
+        for path in files:
+            self.assertEqual(path.read_text(), "KEEP_EXISTING=value\n")
 
     def test_creates_independent_app_with_dotfiles_and_replaced_identifiers(self):
         app = create_app("test-app", self.destination)

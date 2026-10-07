@@ -7,7 +7,7 @@ node_modules/
 .next-codex/
 *.tsbuildinfo
 next-env.d.ts
-*.sqlite3
+*.sqlite*
 .env
 .env.local
 media/

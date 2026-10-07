@@ -30,6 +30,11 @@ template. A interface usa controles nativos e tokens CSS mínimos. A arquitetura
 - Dependências são instaladas pelos locks nativos; versões não ficam no gerador.
 - A preparação não cria usuários ou segredos e não realiza auditoria de pacotes.
 
+A geração agora prepara o app por padrão: cria `.env` a partir dos exemplos
+somente quando ausentes, instala dependências e migra o banco local.
+`--skip-setup` permite gerar apenas arquivos; o setup também pode ser executado
+diretamente em um app existente.
+
 ## Entrega
 
 `create-app.sh` é uma entrada curta para o gerador Python. A aplicação real está
@@ -63,3 +68,19 @@ fundação comum.
 - [Next: instalação](https://nextjs.org/docs/app/getting-started/installation).
 - Guias locais de Route Handlers, cookies e Server/Client Components da versão
   instalada no Holding.
+
+## Erros de validação HTTP
+
+O cliente entende `detail`, `non_field_errors` e erros por campo do Django REST,
+inclusive estruturas aninhadas. `ApiError` mantém o status e `fieldErrors`; sua
+mensagem já pode ser exibida diretamente. O terceiro argumento de `apiRequest`
+ou `downloadRequest` permite fornecer rótulos legíveis dos campos. Esses rótulos
+pertencem ao produto, não ao starter. Respostas vazias ou não JSON usam uma
+mensagem genérica. Não foi adicionada nenhuma dependência.
+
+## Barra comum dos apps
+
+O template usa a logo Wtree branca, barra azul de largura total e navegação
+configurável. A cor vem de `--app-header-background` em `web/src/app/globals.css`;
+nome e links vêm de `web/src/config/app.ts`. Cada app adapta a cor, preservando
+a mesma identidade: Logos azul e Holding verde. Sem novas dependências.

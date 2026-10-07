@@ -16,7 +16,8 @@ def ignored_artifacts(_directory: str, names: list[str]) -> set[str]:
         name for name in names
         if name in {".git", ".venv", "node_modules", "__pycache__", ".ruff_cache", "media", "staticfiles"}
         or name.startswith(".next")
-        or name.endswith((".sqlite3", ".pyc", ".tsbuildinfo"))
+        or ".sqlite" in name
+        or name.endswith((".pyc", ".tsbuildinfo"))
         or (name.startswith(".env") and not name.endswith(".example"))
     }
 
@@ -74,7 +75,9 @@ def main() -> None:
     parser.add_argument("slug", help="Nome do app, por exemplo meu-app")
     parser.add_argument("--destination", type=Path, default=Path.cwd())
     parser.add_argument("--mode", choices=["new", "migration"], default="new")
-    parser.add_argument("--prepare", action="store_true", help="Instalar dependências e migrar banco local")
+    setup_options = parser.add_mutually_exclusive_group()
+    setup_options.add_argument("--skip-setup", action="store_true", help="Gerar somente arquivos, sem preparação local")
+    setup_options.add_argument("--prepare", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     try:
         target = create_app(args.slug, args.destination, args.mode)
@@ -82,13 +85,16 @@ def main() -> None:
         parser.exit(1, "Destino existente: nenhum arquivo foi sobrescrito.\n")
     except (ValueError, OSError) as error:
         parser.exit(1, f"Não foi possível gerar: {error}\n")
-    if args.prepare:
+    if not args.skip_setup:
         try:
             prepare(target)
         except (OSError, subprocess.CalledProcessError):
             parser.exit(1, f"Preparação falhou. Código preservado em {target}; consulte o README.\n")
     print(f"Aplicação criada em {target}")
-    print("Próximos passos: consulte o README; execute bash scripts/setup.sh se ainda não preparou.")
+    if args.skip_setup:
+        print("Execute bash scripts/setup.sh para preparar o app.")
+    else:
+        print("Próximos passos: consulte o README para criar seu usuário e iniciar o app.")
 
 
 if __name__ == "__main__":

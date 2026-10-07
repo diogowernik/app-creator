@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '22'
       - run: python -m unittest discover -s tests -v
-      - run: bash create-app.sh ci-app --destination .validation --mode migration --prepare
+      - run: bash create-app.sh ci-app --destination .validation --mode migration
       - run: .venv/bin/ruff check api
         working-directory: .validation/ci-app
       - run: .venv/bin/python api/manage.py test

@@ -1,11 +1,10 @@
-import Link from "next/link";
-import { LogoutButton } from "@/components/LogoutButton";
+import { AppHeader } from "@/components/AppHeader";
 import { requireUser } from "@/server/auth";
 
 export default async function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   await requireUser();
   return <>
-    <header className="app-header"><Link href="/">__APP_NAME__</Link><LogoutButton /></header>
+    <AppHeader />
     <main className="workspace">{children}</main>
   </>;
 }

@@ -116,12 +116,13 @@ O gerador deve:
 
 - rejeitar destino existente;
 - nunca gravar segredos reais;
-- criar apenas arquivos `.env.example`;
+- incluir exemplos versionados e criar os ambientes locais somente quando ausentes;
 - usar chave insegura somente no desenvolvimento local;
 - falhar em produção quando uma configuração crítica estiver ausente;
 - terminar ao primeiro erro sem deixar uma geração apresentada como concluída.
 
-`--prepare` instala dependências e migra o banco local; não cria arquivos de
-ambiente nem usuários. Uma falha na cópia remove somente a pasta criada pela
+A preparação padrão cria ambientes locais a partir dos exemplos, preserva os
+existentes, instala dependências e migra o banco local; não cria usuários.
+`--skip-setup` gera somente arquivos. Uma falha na cópia remove somente a pasta criada pela
 invocação; uma falha na preparação preserva o código e retorna erro para permitir
 retomada. O modo `migration` acrescenta documentação, sem importar dados.

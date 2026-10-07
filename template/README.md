@@ -11,13 +11,13 @@ A partir da raiz:
 
 ```bash
 bash scripts/setup.sh
-cp api/.env.example api/.env
-cp web/.env.local.example web/.env.local
 ./.venv/bin/python api/manage.py createsuperuser
 ```
 
-O setup instala os locks e migra somente o banco local. Não cria credenciais
-nem arquivos de ambiente. Não execute preparação de desenvolvimento sobre um
+O gerador já executa o setup por padrão. Use o comando acima para retomar a
+preparação ou se gerou com `--skip-setup`. O setup cria os ambientes a partir
+dos exemplos somente quando ausentes, instala os locks e migra o banco local.
+Não cria credenciais. Não execute preparação de desenvolvimento sobre um
 banco de produção.
 
 ## Executar
@@ -35,6 +35,12 @@ npm run dev -- --port 3000
 
 Acesse `http://localhost:3000`. Ao alterar portas, ajuste `DJANGO_API_URL` e
 origens do ambiente. O usuário criado pelo Django autentica no frontend.
+
+## Personalizar a barra
+
+A logo Wtree branca é comum aos apps. A barra usa azul por padrão. Para mudar
+a cor, edite `--app-header-background` em `web/src/app/globals.css` (por exemplo,
+`#2E8B57` para verde). Nome e itens de navegação ficam em `web/src/config/app.ts`.
 
 ## Validar
 

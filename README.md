@@ -54,7 +54,7 @@ O gerador já copia uma aplicação independente. O shell é apenas a entrada;
 ./create-app.sh meu-app
 ./create-app.sh meu-app --destination /caminho/dos/projetos
 ./create-app.sh meu-app --mode migration
-./create-app.sh meu-app --destination /caminho/dos/projetos --prepare
+./create-app.sh meu-app --skip-setup
 ```
 
 O modo de migração não muda a arquitetura da aplicação. Ele apenas inclui documentação e checklists próprios da migração.
@@ -63,11 +63,14 @@ Use um nome em minúsculas com números e hífens. O destino não pode existir,
 inclusive como arquivo ou link. O gerador não copia bancos, segredos, ambientes
 instalados ou Git. Registra a versão da fundação em `.app-creator.json`.
 
-Sem `--prepare`, a geração usa apenas Python e copia o código, sem instalar
-dependências. Com `--prepare`, instala os locks com uv/npm e migra o banco local.
-Os requisitos de Python/Node estão nos manifestos do template. Nenhum segredo
-ou usuário é criado automaticamente. Consulte o README do app para configurar
-ambientes, criar o primeiro usuário e iniciar os dois processos.
+Por padrão, a geração instala os locks com uv/npm, cria os ambientes locais a
+partir dos exemplos e migra o banco. `--skip-setup` gera somente os arquivos.
+Os requisitos de Python/Node estão nos manifestos do template. Arquivos de
+ambiente existentes são preservados e nenhum usuário é criado automaticamente.
+Consulte o README do app para criar o primeiro usuário e iniciar os processos.
+
+Em um app já criado, execute `bash scripts/setup.sh` na raiz para preparar ou
+retomar a preparação. `--prepare` continua aceito por compatibilidade.
 
 Para um repositório já existente, como Logos, gere em outra pasta e integre os
 arquivos necessários. O gerador nunca sobrescreve a pasta existente.
@@ -76,13 +79,17 @@ arquivos necessários. O gerador nunca sobrescreve a pasta existente.
 
 ```bash
 python3 -m unittest discover -s tests -v
-./create-app.sh teste-app --destination /tmp/app-creator-test --prepare
+./create-app.sh teste-app --destination /tmp/app-creator-test
 ```
 
 Depois execute as verificações do README gerado: testes Django, lint/tipos,
 testes frontend, build isolada e autenticação real entre Next e Django.
 
 ## Evolução planejada
+
+Os apps gerados compartilham a logo Wtree branca e a barra azul. A cor fica em
+`--app-header-background` no CSS; nome e navegação ficam em `src/config/app.ts`
+do frontend. Cada produto pode adaptar esses valores mantendo a mesma estrutura.
 
 O primeiro produto é o gerador. Depois que ele estiver estável, o mesmo projeto poderá oferecer um frontend local para gerenciar aplicações criadas ou já existentes:
 
