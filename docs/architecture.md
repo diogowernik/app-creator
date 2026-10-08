@@ -48,7 +48,7 @@ Regras financeiras, modelos do Holding e integrações específicas não pertenc
 
 ## Frontend
 
-A base do frontend será Next.js, React e TypeScript. Ela deve incluir:
+A base do frontend usa Next.js, React e TypeScript. Ela inclui:
 
 - login, logout e recuperação da sessão;
 - comunicação com Django por rotas internas do Next;
@@ -59,16 +59,16 @@ A base do frontend será Next.js, React e TypeScript. Ela deve incluir:
 - tema e componentes estruturais mínimos;
 - testes do fluxo de autenticação.
 
-A fundação visual será pequena. Ela deve oferecer tokens e componentes básicos sem impor páginas ou decisões de produto do Holding.
+A fundação visual é pequena. Ela deve oferecer tokens e componentes básicos sem impor páginas ou decisões de produto do Holding.
 
-A primeira versão implementada usa tokens CSS e controles nativos. A próxima
-fundação, definida abaixo, substitui essa escolha por MUI e Geist. O usuário
+A versão 0.2.0 substituiu os tokens CSS e controles nativos da primeira
+fundação por MUI + Emotion + Geist. O usuário
 padrão do Django e os endpoints Djoser dispensam um app `users` vazio.
 
-### Evolução visual planejada
+### Fundação visual implementada
 
-Planejada em 7 de outubro de 2026, com implementação pendente: receber a base
-consolidada de Logos na sequência `Holding -> Logos -> App Creator`. Manter
+Implementada em 7 de outubro de 2026, com aceite visual e validação
+complementar pendentes: base consolidada de Logos na sequência `Holding -> Logos -> App Creator`. Manter
 React/TypeScript e adotar MUI + Geist; reutilizar tema e composições da Holding,
 parametrizar identidade neutra e incluir navegação uniforme e shell com painéis
 recolhíveis opcionais. Usar controles MUI diretamente, removendo a base visual
@@ -80,7 +80,8 @@ futuro consumidor, receberão a mesma fundação por adoção explícita. Sua po
 evolução para DEX/CEX é um domínio próprio, não uma exigência do starter.
 
 O [plano da fundação visual](frontend-foundation-plan.md) define arquivos,
-limites e validação em app gerado. O template incluirá um guia próprio, sem
+limites e validação em app gerado. O [registro da rodada](frontend-validation.md)
+separa os resultados observados das verificações pendentes. O template inclui um [guia próprio](../template/docs/frontend-guide.md), sem
 dependência de checkout ou runtime dos projetos de referência.
 
 ## Autenticação

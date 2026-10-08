@@ -85,11 +85,16 @@ python3 -m unittest discover -s tests -v
 Depois execute as verificações do README gerado: testes Django, lint/tipos,
 testes frontend, build isolada e autenticação real entre Next e Django.
 
-## Evolução planejada
+## Fundação visual 0.2.0
 
-Os apps gerados compartilham a logo Wtree branca e a barra azul. A cor fica em
-`--app-header-background` no CSS; nome e navegação ficam em `src/config/app.ts`
-do frontend. Cada produto pode adaptar esses valores mantendo a mesma estrutura.
+A versão 0.2.0 usa MUI + Emotion + Geist, identidade neutra e painéis opcionais.
+Nome, navegação e cores ficam em `web/src/config/app.ts`. Padrões recorrentes
+ficam no tema MUI. Veja o [guia portátil](template/docs/frontend-guide.md),
+o [changelog](CHANGELOG.md) e a [validação](docs/frontend-validation.md).
+
+Aceite visual e validação complementar permanecem pendentes.
+
+## Evolução planejada
 
 O primeiro produto é o gerador. Depois que ele estiver estável, o mesmo projeto poderá oferecer um frontend local para gerenciar aplicações criadas ou já existentes:
 

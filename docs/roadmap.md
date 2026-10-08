@@ -44,23 +44,26 @@ gera documentos para preencher; não examina nem importa dados automaticamente.
 - [x] Gerar checklist de paridade funcional e visual.
 - [x] Manter a implementação do domínio fora do gerador.
 
-## 5.1. Fundação visual — próxima rodada
+## 5.1. Fundação visual — implementada
 
-Planejamento concluído em 7 de outubro de 2026; implementação pendente.
-Receber a base validada de Logos após sua consolidação com os padrões da
-Holding. Detalhes no [plano visual](frontend-foundation-plan.md).
+Implementação concluída em 7 de outubro de 2026; testes e builds locais
+aprovados. Aceite visual e validação complementar pendentes. A base foi
+recebida de Logos após sua consolidação com os padrões da Holding. Detalhes no [plano visual](frontend-foundation-plan.md).
 
 - [x] Definir origem, fronteiras e sequência da transferência.
 - [x] Confirmar MUI + Geist e refatoração direta da base visual.
-- [ ] Concluir a fundação visual global em Logos.
-- [ ] Integrar MUI/Emotion/Next com manifestos e locks compatíveis.
-- [ ] Transferir tema neutro, Geist e composições MUI da Holding/Logos.
-- [ ] Incluir shell com painéis opcionais e navegação de tamanho uniforme.
-- [ ] Adaptar layout, cabeçalho, login e estados aos componentes comuns.
-- [ ] Incluir guia portátil nos apps gerados.
-- [ ] Remover estilos particulares substituídos do template.
-- [ ] Validar geração limpa, independência, responsividade e autenticação.
-- [ ] Registrar versão e instruções para apps existentes.
+- [x] Concluir a fundação visual global em Logos.
+- [x] Integrar MUI/Emotion/Next com manifestos e locks compatíveis.
+- [x] Transferir tema neutro, Geist e composições MUI da Holding/Logos.
+- [x] Incluir shell com painéis opcionais e navegação de tamanho uniforme.
+- [x] Adaptar layout, cabeçalho, login e estados aos componentes comuns.
+- [x] Incluir guia portátil nos apps gerados.
+- [x] Remover estilos particulares substituídos do template.
+- [x] Validar geração limpa, independência e autenticação; testar o comportamento dos painéis.
+- [ ] Concluir a revisão visual do app gerado e a troca de identidade no navegador.
+- [x] Registrar versão e instruções para apps existentes.
+
+Resultados e limites: [registro da rodada](frontend-validation.md).
 
 O conteúdo editorial de Logos e o domínio financeiro da Holding ficam fora
 do starter. Esta fundação é do template; o painel de gerenciamento abaixo

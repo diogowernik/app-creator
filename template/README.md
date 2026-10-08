@@ -38,14 +38,15 @@ origens do ambiente. O usuário criado pelo Django autentica no frontend.
 
 ## Personalizar a barra
 
-A logo Wtree branca é comum aos apps. A barra usa azul por padrão. Para mudar
-a cor, edite `--app-header-background` em `web/src/app/globals.css` (por exemplo,
-`#2E8B57` para verde). Nome e itens de navegação ficam em `web/src/config/app.ts`.
+A logo Wtree branca é comum aos apps. Nome, navegação e identidade neutra
+ficam em `web/src/config/app.ts`; controles e superfícies seguem o tema MUI.
+Consulte [docs/frontend-guide.md](docs/frontend-guide.md) para alterar padrões
+e acrescentar painéis opcionais sem copiar estilos de uma tela para outra.
 
 ## Validar
 
 ```bash
-DJANGO_ENV=development ./.venv/bin/python api/manage.py test
+(cd api && DJANGO_ENV=development ../.venv/bin/python manage.py test)
 ./.venv/bin/ruff check api
 cd web
 npm run lint

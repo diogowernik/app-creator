@@ -1,10 +1,10 @@
 # Planejamento da fundação visual do template
 
-Data: 7 de outubro de 2026. Estado: planejado; implementação pendente.
+Data: 7 de outubro de 2026. Estado: implementado; aceite visual e validação complementar pendentes.
 
 ## Origem e sequência
 
-O template receberá a base visual consolidada primeiro em Logos, na sequência
+O template recebeu a base visual consolidada primeiro em Logos, na sequência
 `Holding -> Logos -> App Creator`. A Holding fornece Card, Paper, cabeçalhos,
 escala tipográfica, ações compactas e o guia de interface. Logos acrescenta
 os painéis laterais recolhíveis e a composição de escrita inspirada na
@@ -17,8 +17,8 @@ como DEX/CEX pertence a um planejamento de produto próprio.
 
 O planejamento detalhado de Logos está em seu repositório, no documento
 `docs/frontend-layout-plan.md`. Este documento define somente a transferência
-para o starter e complementa a [arquitetura](architecture.md). A fundação atual
-permanece a descrita em [foundation.md](foundation.md) até a implementação.
+para o starter e complementa a [arquitetura](architecture.md). A fundação atual está registrada em [foundation.md](foundation.md) e no
+[guia portátil](../template/docs/frontend-guide.md).
 
 ## Recorte adotado
 
@@ -33,7 +33,7 @@ A entrega remove a base visual substituída, sem adaptadores de legado ou flags
 para manter duas implementações. Apps gerados anteriormente continuam
 independentes e só serão modificados por uma adoção explícita.
 
-O template terá:
+O template possui:
 
 - tema MUI com escala de fontes, espaçamento, bordas, sombras e superfícies;
 - identidade neutra configurável em um ponto, incluindo derivados de hover,
@@ -47,14 +47,14 @@ O template terá:
 - guia incluído nos apps gerados, indicando onde alterar cada padrão.
 
 Painéis são opcionais. Um app simples pode começar só com cabeçalho e conteúdo;
-a capacidade de adicionar painéis já estará implementada e documentada. Quando
+a capacidade de adicionar painéis está implementada e documentada. Quando
 um painel estiver configurado, poder abri-lo vazio não depende de uma feature
 editorial. Os itens da navegação e o conteúdo auxiliar são fornecidos pelo app.
 
 Projects, Collections, recentes, guardas de rascunho, EPUB, árvore de capítulos,
 APIs editoriais e controles financeiros permanecem em seus produtos.
 
-## Arquivos previstos
+## Arquivos implementados
 
 | Destino no template | Responsabilidade |
 | --- | --- |
@@ -67,7 +67,7 @@ APIs editoriais e controles financeiros permanecem em seus produtos.
 | `web/src/app/layout.tsx`, `globals.css` | Geist, cache Next/MUI, camadas CSS e regras globais mínimas |
 | `web/package.json`, lockfile | MUI/Emotion/adaptador compatíveis com Next e React |
 | `web/src/app/(app)/layout.tsx` | Proteger sessão e compor o shell |
-| `docs/frontend-ui-guide.md` | Guia portátil da base entregue |
+| `docs/frontend-guide.md` | Guia portátil da base entregue |
 | `docs/architecture.md`, `AGENTS.md` | Apontar ao guia e às responsabilidades visuais |
 | `web/tests/` | Comportamento dos painéis e regressão da autenticação |
 
@@ -103,3 +103,11 @@ funcionar com teclado. Abrir/recolher não pode remontar o conteúdo de trabalho
 
 O gerador já cria uma cópia independente: alterar o template não atualiza Logos
 nem outros apps gerados. A futura adoção por projetos existentes será explícita.
+
+## Entrega implementada
+
+MUI/Emotion e Geist integrados; tema centralizado, controles e composições
+substituídos diretamente. CSS antigo removido. O [guia](frontend-guide.md)
+registra a fonte de cada padrão e o uso dos painéis. O domínio e a
+autenticação foram preservados. O [registro da rodada](frontend-validation.md) distingue verificações já
+executadas de aceite visual e validação ainda pendentes.

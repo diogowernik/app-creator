@@ -1,6 +1,6 @@
 # Fundação adotada — primeira rodada
 
-Data: 6 de outubro de 2026.
+Data: 6 de outubro de 2026. Atualização visual: 7 de outubro de 2026.
 
 ## Recorte do Holding
 
@@ -14,8 +14,10 @@ Preservados e adaptados:
 - testes e CI executados sobre uma aplicação gerada.
 
 O starter mantém os domínios financeiros, banco e ambientes do Holding fora do
-template. A interface usa controles nativos e tokens CSS mínimos. A arquitetura
-é a referência principal; o visual e a navegação de cada produto ficam livres.
+template. A interface agora usa MUI + Emotion + Geist e tema centralizado, com
+identidade neutra configurável. A arquitetura e as composições da Holding
+foram consolidadas em Logos e transferidas ao template. O conteúdo e a
+navegação de cada produto permanecem próprios.
 
 ## Adaptações concretas
 
@@ -80,7 +82,8 @@ mensagem genérica. Não foi adicionada nenhuma dependência.
 
 ## Barra comum dos apps
 
-O template usa a logo Wtree branca, barra azul de largura total e navegação
-configurável. A cor vem de `--app-header-background` em `web/src/app/globals.css`;
-nome e links vêm de `web/src/config/app.ts`. Cada app adapta a cor, preservando
-a mesma identidade: Logos azul e Holding verde. Sem novas dependências.
+O template usa logo Wtree branca, barra de largura total e identidade neutra.
+Nome, links e cores ficam em `web/src/config/app.ts`; regras recorrentes no
+tema MUI. Painéis são opcionais e independentes do domínio.
+Consulte o [guia portátil](../template/docs/frontend-guide.md) e a
+[validação da rodada](frontend-validation.md).
