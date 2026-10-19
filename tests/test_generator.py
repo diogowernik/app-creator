@@ -51,6 +51,14 @@ class GeneratorTests(unittest.TestCase):
         app = create_app("test-app", self.destination)
         self.assertTrue((app / ".gitignore").exists())
         self.assertTrue((app / ".github/workflows/ci.yml").exists())
+        self.assertTrue((app / ".github/workflows/deploy.yml").exists())
+        self.assertTrue((app / "deploy").exists())
+        self.assertTrue((app / "deploy-status").exists())
+        self.assertTrue(os.access(app / "deploy", os.X_OK))
+        self.assertTrue(os.access(app / "deploy-status", os.X_OK))
+        self.assertTrue((app / "deploy.env.example").exists())
+        self.assertTrue((app / "docs/deployment.md").exists())
+        self.assertTrue((app / "api/gunicorn.conf.py").exists())
         self.assertEqual(json.loads((app / "web/package.json").read_text())["name"], "test-app-web")
         for path in app.rglob("*"):
             if path.is_file():

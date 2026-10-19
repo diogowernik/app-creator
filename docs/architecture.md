@@ -27,7 +27,11 @@ O shell não deve produzir arquivos grandes por `heredoc`, conhecer detalhes de 
 │   └── .env.local.example
 ├── docs/
 ├── .github/workflows/ci.yml
+├── .github/workflows/deploy.yml
 ├── scripts/                # preparação e teste de integração
+├── deploy                  # publicação seletiva no servidor
+├── deploy-status           # último workflow por alvo
+├── deploy.env.example      # domínio e portas da instalação
 ├── AGENTS.md
 └── README.md
 ```
@@ -128,6 +132,18 @@ Catálogo/inspectores ---> estado dos projetos <--- Frontend local
 - adaptadores tratam diferenças entre Django, Next.js e, futuramente, Flutter.
 
 O frontend não deve executar atualizações arbitrárias por conta própria. A camada operacional precisa validar o projeto, montar um plano e pedir confirmação antes de qualquer alteração.
+
+## Deploy da aplicação gerada
+
+O template inclui o fluxo comprovado por Holding e Logos: checkout próprio,
+Next e Django em processos PM2 distintos, API no loopback, Nginx na borda e
+GitHub Actions com alvos `all`, `api` e `web`. Domínio e portas não pertencem à
+fundação e são definidos somente no `deploy.env` da instalação. O gerador não
+aloca infraestrutura, cria DNS, certificados, chaves ou segredos.
+
+A `main` permanece como única branch de trabalho. As referências remotas
+`deploy-*` existem apenas como gatilho; instalação de dependências é explícita
+e separada do deploy cotidiano.
 
 ## Segurança operacional
 

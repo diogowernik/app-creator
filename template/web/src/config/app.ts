@@ -1,11 +1,12 @@
 import type { AppIdentity } from "@/theme/types";
 export const appConfig = {
   name: "__APP_NAME__",
+  storagePrefix: "__APP_SLUG__",
   navigation: [{ label: "Início", href: "/", activePaths: [] as string[] }],
   identity: {
-    primary: { main: "#4b555d", dark: "#30383e", light: "#77828a" },
-    header: "#4b555d",
+    primary: { main: "#1976d2", dark: "#115293", light: "#4791db" },
+    header: "#1976d2",
     headerText: "#ffffff",
-    cardTitle: "#394148",
+    cardTitle: "#2858a5",
   } satisfies AppIdentity,
 };

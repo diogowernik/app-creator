@@ -7,6 +7,7 @@ import { AppShell, useShell } from "@/components/shell/AppShell";
 import { render } from "./render";
 let resize: (width: number) => void;
 beforeEach(() => {
+  localStorage.clear();
   let width = 1440;
   const subscriptions = new Set<() => void>();
   window.matchMedia = (query) =>
@@ -69,6 +70,18 @@ function Workspace() {
     </AppShell>
   );
 }
+it("restores both desktop panel preferences after remount", async () => {
+  const user = userEvent.setup();
+  const view = render(<Workspace />);
+  await user.click(screen.getByRole("button", { name: "Navegação" }));
+  await user.click(screen.getByRole("button", { name: "Preview" }));
+  view.unmount();
+  render(<Workspace />);
+  await waitFor(() => {
+    expect(screen.getByRole("button", { name: "Navegação" })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Preview" })).toHaveAttribute("aria-expanded", "false");
+  });
+});
 it("keeps the same editor and draft while panels collapse and the viewport changes", async () => {
   render(<Workspace />);
   const user = userEvent.setup();

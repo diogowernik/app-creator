@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.0 — implementação local até 13 de outubro de 2026
+
+Identidade inicial azul, Paper na superfície do CardHeader, grade com intervalo
+de 16px e conteúdo centralizado. CardSection recolhe sem desmontar conteúdo;
+useStoredToggle e AppShell lembram escolhas por app e contexto. FeedbackProvider
+centraliza confirmações temporárias. Aparência e geometria comum permanecem na
+fundação; nenhum fluxo de produto é obrigatório.
+
+O template também passa a gerar o deploy seletivo validado em Holding e Logos:
+GitHub Actions para `all`, `api` e `web`, processos PM2 separados, API interna,
+configuração de domínio e portas por instalação, backup SQLite e guia de
+primeira publicação. O gerador continua sem criar infraestrutura ou segredos.
+
+Apps existentes adotam esses recursos explicitamente, seguindo o guia distribuído.
+Gunicorn entrou somente no extra de produção; não houve publicação de release.
+
 ## 0.2.0 — implementação local em 7 de outubro de 2026
 
 A fundação visual passa a MUI + Emotion + Geist, com identidade centralizada,

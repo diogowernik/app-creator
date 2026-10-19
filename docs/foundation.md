@@ -30,6 +30,8 @@ navegação de cada produto permanecem próprios.
   o cookie de autenticação.
 - Origem de escritas é validada; a origem pública de produção é explícita.
 - Dependências são instaladas pelos locks nativos; versões não ficam no gerador.
+- Deploy de API e web é seletivo, usa configuração própria por instalação e
+  mantém a API interna atrás do Next e do Nginx.
 - A preparação não cria usuários ou segredos e não realiza auditoria de pacotes.
 
 A geração agora prepara o app por padrão: cria `.env` a partir dos exemplos

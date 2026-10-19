@@ -10,10 +10,14 @@
 - Valide builds com `NEXT_DIST_DIR=.next-codex` para preservar o servidor dev.
 - Leia `docs/architecture.md`; acrescente documentação de produto antes do domínio.
 - Não copie dados, segredos ou dependências de projetos de referência.
+- Leia `docs/deployment.md` antes de alterar produção. Commit, push e deploy
+  são ações distintas; publique apenas quando o usuário pedir.
 
 ## Interface
 
 - Use MUI + Geist e leia `docs/frontend-guide.md` antes de alterar a interface.
 - Identidade em `web/src/config/app.ts`; padrões recorrentes no tema MUI.
-- Use MUI diretamente; CSS local somente para conteúdo especializado.
+- Use MUI diretamente; aparência comum no tema e composições compartilhadas.
+- Sem estilos inline ou exceções visuais por página, salvo pedido explícito do usuário.
+- CSS local somente para conteúdo especializado; não redesenhar controles.
 - Não reintroduza controles nativos estilizados nem uma segunda base visual.

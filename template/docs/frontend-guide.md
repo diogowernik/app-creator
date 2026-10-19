@@ -4,6 +4,11 @@ A base é MUI 9 + Emotion + Geist, integrada ao App Router do Next. Os controles
 são componentes MUI usados diretamente. As composições locais existem para
 agrupar responsabilidades reais, sem recriar uma biblioteca de controles.
 
+A identidade inicial deve ser azul ou verde, configurada em `config/app.ts`;
+cinza como identidade principal foi rejeitado. Superfícies neutras permanecem.
+O starter começa azul; mudar a identidade na configuração, sem sobrescrever
+cores em cada página.
+
 ## Onde mudar cada padrão
 
 - `web/src/config/app.ts`: nome, navegação e identidade do app. `primary`
@@ -19,8 +24,12 @@ agrupar responsabilidades reais, sem recriar uma biblioteca de controles.
   seção de dados e menu contextual.
 
 Uma mudança recorrente deve acontecer no tema ou na composição responsável.
-O `sx` de uma feature serve para sua geometria particular; não deve redefinir
-cores, fonte de controles, aparência de botões ou cabeçalhos globais.
+Não usar `sx`, `style` ou CSS local para inventar aparência por página.
+Geometria funcional pertence às composições compartilhadas em `theme/`;
+cores, fontes e métricas de controles pertencem ao tema.
+Uma exceção em `styled` também está fora do padrão e exige especificação
+explícita do usuário. A composição pode variar conforme a tarefa, sem exigir
+abas, painéis ou caixas aninhadas em todas as páginas.
 
 ## Cards e leitura
 
@@ -29,6 +38,20 @@ Use `CardHeader` para título e ações à direita, `CardContent` para conteúdo
 título de 18px e altura mínima de 52px; ações podem quebrar linha em telas
 estreitas. Botões comuns são compactos, sem caixa alta. Copiar e salvar usam
 `CompactActionButton` de 36px, com nome acessível e tooltip.
+
+`CardSection` mantém o CardHeader padrão e aceita `expanded`/`onToggle` para
+recolher sem desmontar o conteúdo. `useStoredToggle(nome)` lembra a escolha
+no navegador; use nomes estáveis, incluindo o identificador do recurso quando
+a preferência for específica. `titleControls` permite seletores junto ao título
+e `actions` recebe as ações à direita, sem redesenhar o cabeçalho.
+Entre cards relacionados, partir de intervalos compactos na escala do tema;
+evitar somar margem do card e gap do contêiner. Mais respiro deve ter uma função,
+como separar áreas distintas, em vez de ser um ajuste visual isolado.
+`components/ui/CardLayout.tsx` fornece `CardGrid` com intervalo compartilhado
+de 16px e duas colunas responsivas; `CardGridFullWidth` ocupa a linha inteira.
+Cards não acrescentam margem própria. `PageContent` centraliza o conteúdo
+na largura confortável do tema; `wide` libera a largura para tarefas que
+precisam dela. A composição inicial usa essa base.
 
 Declare a semântica do título: `slotProps={{ title: { component: "h2",
 variant: "h6" } }}`; use `h1` para o título principal e `h3` para cartões
@@ -57,7 +80,10 @@ Omitir `left`/`right` elimina aquele painel e seu controle no AppHeader.
 `right={null}` configura um painel vazio que pode ser aberto. Um app simples
 começa apenas com cabeçalho e conteúdo; os painéis são capacidades disponíveis.
 
-`useShell()` expõe estado e controles sincronizados. `rightHost` permite que
+`useShell()` expõe estado e controles sincronizados. A escolha de abrir ou
+fechar é persistida no navegador, isolada pelo `storagePrefix` do app.
+`setRightContext({ key, defaultOpen })` permite uma preferência por área;
+restaure `null` ao sair dela. `rightHost` permite que
 uma feature publique conteúdo contextual com `createPortal`, removido quando
 a feature desmonta. O conteúdo central permanece na mesma posição na árvore
 React ao alternar painéis e mudar de viewport; rascunhos não são remontados.
@@ -70,6 +96,13 @@ o direito abre por padrão a partir de 1280px e ocupa uma coluna a partir de
 Em mobile, Drawer temporário cuida de backdrop, Escape, foco e retorno ao controle; um painel abre por vez.
 Links cuja navegação foi cancelada não fecham a lateral. O menu e o preview
 rolam independentemente da área central. Resize por arrastar é evolução futura.
+
+## Feedback
+
+`AppProviders` inclui `FeedbackProvider`. Use `useFeedback().notify(mensagem,
+severidade)` para confirmações temporárias, como copiar ou salvar. A próxima
+mensagem substitui a anterior; erros ficam até fechar. Diagnósticos que exigem
+consulta ou cópia pertencem ao recurso, sem ocupar a tela quando não existem.
 
 ## CSS e fronteiras
 

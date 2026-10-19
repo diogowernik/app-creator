@@ -17,7 +17,7 @@ declare module "@mui/material/styles" {
         sidebar: string;
         reading: string;
       };
-      layout: { leftWidth: number; rightWidth: number };
+      layout: { leftWidth: number; rightWidth: number; rightOverlayWidth: number; contentWidth: number };
     };
   }
   interface ThemeOptions {

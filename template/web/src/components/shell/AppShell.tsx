@@ -3,14 +3,22 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Drawer from "@mui/material/Drawer";
+import { appConfig } from "@/config/app";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
+import {
+  WorkspaceRoot,
+  WorkspaceColumns,
+  NavigationBoundary,
+  WorkspaceMain,
+  WorkspaceDrawer,
+  PanelCloseButton,
+  PreviewPanel,
+} from "@/theme/workspace";
+type RightContext = { key: string; defaultOpen: boolean };
 type ShellState = {
   leftOpen: boolean;
   rightOpen: boolean;
@@ -18,8 +26,10 @@ type ShellState = {
   toggleRight: () => void;
   setRightOpen: (open: boolean) => void;
   rightHost: HTMLDivElement | null;
+  setRightContext: (context: RightContext | null) => void;
   hasLeft: boolean;
   hasRight: boolean;
+  rightLabel: string;
 };
 const ShellContext = createContext<ShellState | null>(null);
 export function useShell() {
@@ -42,116 +52,121 @@ export function AppShell({
   leftLabel?: string;
   rightLabel?: string;
 }) {
-  const theme = useTheme();
   const desktop = useMediaQuery("(min-width: 761px)");
   const rightDocked = useMediaQuery("(min-width: 1100px)");
   const wide = useMediaQuery("(min-width: 1280px)");
   const [leftOverride, setLeft] = useState<boolean | null>(null);
-  const [rightOverride, setRight] = useState<boolean | null>(null);
+  const [rightOverrides, setRightOverrides] = useState<Record<string, boolean>>({});
+  const [preferencesLoaded, setPreferencesLoaded] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void Promise.resolve().then(() => {
+      if (!active) return;
+      try {
+        const saved = JSON.parse(localStorage.getItem(`${appConfig.storagePrefix}.shell.panels`) || "{}");
+        const savedLeft = typeof saved?.left === "boolean" ? saved.left : null;
+        const savedRight = saved?.right && typeof saved.right === "object" && !Array.isArray(saved.right)
+          ? Object.fromEntries(Object.entries(saved.right).filter(([, value]) => typeof value === "boolean")) as Record<string, boolean>
+          : {};
+        setLeft((current) => current ?? savedLeft);
+        setRightOverrides((current) => ({ ...savedRight, ...current }));
+      } catch { /* Local preferences never block the workspace. */ }
+      setPreferencesLoaded(true);
+    });
+    return () => { active = false; };
+  }, []);
+  useEffect(() => {
+    if (!preferencesLoaded) return;
+    try {
+      localStorage.setItem(`${appConfig.storagePrefix}.shell.panels`, JSON.stringify({ left: leftOverride, right: rightOverrides }));
+    } catch { /* Storage-disabled browsers still allow panel controls. */ }
+  }, [leftOverride, rightOverrides, preferencesLoaded]);
+  const [rightContext, setRightContext] = useState<RightContext | null>(null);
+  const rightKey = rightContext?.key ?? "default";
   const [rightHost, setHost] = useState<HTMLDivElement | null>(null);
-  const rightOpen = right !== undefined && (rightOverride ?? wide);
+  const rightOpen = right !== undefined && (rightOverrides[rightKey] ?? rightContext?.defaultOpen ?? wide);
   const leftOpen =
     Boolean(left) && (leftOverride ?? desktop) && (desktop || !rightOpen);
   const attachHost = useCallback(
     (node: HTMLDivElement | null) => setHost(node),
     [],
   );
-  function setRightOpen(open: boolean) {
-    setRight(open);
-    if (!desktop && open) setLeft(false);
-  }
+  const setRightOpen = useCallback(
+    (open: boolean) => {
+      setRightOverrides((current) => ({ ...current, [rightKey]: open }));
+      if (!desktop && open) setLeft(false);
+    },
+    [desktop, rightKey],
+  );
   const state = {
     leftOpen,
     rightOpen,
     toggleLeft: () => {
       setLeft(!leftOpen);
-      if (!desktop && !leftOpen) setRight(false);
+      if (!desktop && !leftOpen) setRightOpen(false);
     },
     toggleRight: () => setRightOpen(!rightOpen),
     setRightOpen,
     rightHost,
+    setRightContext,
     hasLeft: Boolean(left),
     hasRight: right !== undefined,
+    rightLabel,
   };
   function panel(
     side: "left" | "right",
     content: ReactNode,
     open: boolean,
-    width: number,
     label: string,
   ) {
     const docked = desktop && (side === "left" || rightDocked);
     return (
-      <Drawer
+      <WorkspaceDrawer
+        panelSide={side}
+        docked={docked}
+        expanded={open}
         variant={docked ? "permanent" : "temporary"}
         anchor={side}
         open={open}
-        onClose={() => (side === "left" ? setLeft(false) : setRight(false))}
+        onClose={() => (side === "left" ? setLeft(false) : setRightOpen(false))}
         slotProps={{
           root: { keepMounted: true },
           paper: {
             component: "aside",
             id: side === "left" ? "app-left-panel" : "app-right-panel",
             "aria-label": label,
-            sx: {
-              position: docked ? "relative" : "fixed",
-              top: docked ? 0 : { xs: 56, sm: 64 },
-              width,
-              maxWidth: "calc(100vw - 48px)",
-              height: docked
-                ? "100%"
-                : { xs: "calc(100% - 56px)", sm: "calc(100% - 64px)" },
-              bgcolor:
-                side === "left"
-                  ? theme.app.surfaces.sidebar
-                  : theme.app.surfaces.reading,
-              boxShadow: "none",
-              display: docked && !open ? "none" : undefined,
-            },
           },
-        }}
-        sx={{
-          width: docked && open ? width : 0,
-          flexShrink: 0,
-          overflow: "hidden",
-          height: "100%",
         }}
       >
         {!docked && (
-          <Button
+          <PanelCloseButton
             variant="text"
-            onClick={() => (side === "left" ? setLeft(false) : setRight(false))}
-            sx={{ alignSelf: "flex-end", m: 1 }}
+            onClick={() => (side === "left" ? setLeft(false) : setRightOpen(false))}
           >
-            Fechar {side === "left" ? "navegação" : "preview"}
-          </Button>
+            Fechar{" "}
+            {side === "left"
+              ? "navegação"
+              : rightLabel.toLocaleLowerCase("pt-BR")}
+          </PanelCloseButton>
         )}
         {side === "left" ? (
           content
         ) : (
-          <Box id="text-preview" sx={{ p: 2, overflowWrap: "anywhere" }}>
+          <PreviewPanel id="text-preview">
             {content}
             <div ref={attachHost} />
-          </Box>
+          </PreviewPanel>
         )}
-      </Drawer>
+      </WorkspaceDrawer>
     );
   }
   return (
     <ShellContext.Provider value={state}>
-      <Box
-        sx={{
-          height: "100dvh",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-        }}
-      >
+      <WorkspaceRoot>
         {header}
-        <Box sx={{ display: "flex", flex: 1, minHeight: 0 }}>
+        <WorkspaceColumns>
           {left && (
-            <Box
-              sx={{ display: "contents" }}
+            <NavigationBoundary
               onClick={(event) => {
                 if (
                   !desktop &&
@@ -161,36 +176,13 @@ export function AppShell({
                   setLeft(false);
               }}
             >
-              {panel(
-                "left",
-                left,
-                leftOpen,
-                theme.app.layout.leftWidth,
-                leftLabel,
-              )}
-            </Box>
+              {panel("left", left, leftOpen, leftLabel)}
+            </NavigationBoundary>
           )}
-          <Box
-            component="main"
-            sx={{
-              flex: 1,
-              minWidth: 0,
-              overflowY: "auto",
-              p: { xs: 1.5, md: 2.5 },
-            }}
-          >
-            {children}
-          </Box>
-          {right !== undefined &&
-            panel(
-              "right",
-              right,
-              rightOpen,
-              theme.app.layout.rightWidth,
-              rightLabel,
-            )}
-        </Box>
-      </Box>
+          <WorkspaceMain component="main">{children}</WorkspaceMain>
+          {right !== undefined && panel("right", right, rightOpen, rightLabel)}
+        </WorkspaceColumns>
+      </WorkspaceRoot>
     </ShellContext.Provider>
   );
 }

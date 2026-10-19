@@ -38,7 +38,7 @@ origens do ambiente. O usuário criado pelo Django autentica no frontend.
 
 ## Personalizar a barra
 
-A logo Wtree branca é comum aos apps. Nome, navegação e identidade neutra
+A logo Wtree branca é comum aos apps. Nome, navegação e identidade configurável
 ficam em `web/src/config/app.ts`; controles e superfícies seguem o tema MUI.
 Consulte [docs/frontend-guide.md](docs/frontend-guide.md) para alterar padrões
 e acrescentar painéis opcionais sem copiar estilos de uma tela para outra.
@@ -72,5 +72,7 @@ aleatória com pelo menos 50 caracteres e `DJANGO_ALLOWED_HOSTS` explícitos.
 Use `DATABASE_URL` conforme o destino, HTTPS e backup adequado. Next exige
 `DJANGO_API_URL` e `APP_ORIGIN` pública. Não versione segredos.
 
-Build e start devem usar o mesmo `NEXT_DIST_DIR`. A implantação específica não
-é automatizada por esta fundação. Consulte [arquitetura](docs/architecture.md).
+O template inclui deploy seletivo de API e web pelo GitHub Actions, no padrão
+de Holding e Logos. Reserve domínio e portas próprios antes da primeira
+publicação e siga o [guia de deploy](docs/deployment.md). Consulte também a
+[arquitetura](docs/architecture.md).

@@ -32,6 +32,11 @@ do processo têm precedência sobre `.env`. Configure `APP_ORIGIN` explicitament
 no Next em produção. Confiança em proxy Django é opt-in; não aceitar cabeçalhos
 encaminhados de origem não controlada.
 
+Produção usa processos separados para Next e Django. A API permanece no
+loopback; Nginx publica somente o frontend, que conserva a fronteira HTTP já
+usada em desenvolvimento. Domínio e portas pertencem à instalação e ficam em
+`deploy.env`, nunca no gerador. Consulte o [guia de deploy](deployment.md).
+
 Manifestos e locks são as fontes de dependências. A aplicação é independente do
 App Creator e não recebe suas atualizações automaticamente. `.app-creator.json`
 registra somente proveniência da geração.
@@ -48,6 +53,6 @@ mensagem genérica. Não foi adicionada nenhuma dependência.
 ## Barra comum dos apps
 
 O template usa a logo Wtree branca, barra de largura total e navegação
-configurável. Nome, links e identidade neutra vêm de `web/src/config/app.ts`.
+configurável. Nome, links e identidade configurável vêm de `web/src/config/app.ts`.
 MUI deriva os estados dos controles; as composições preservam a família visual
 da Holding e de Logos. Consulte o [guia](frontend-guide.md).

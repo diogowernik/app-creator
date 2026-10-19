@@ -11,6 +11,7 @@ Gerar uma aplicação pronta para desenvolvimento com:
 - login conectado entre frontend e backend;
 - configuração local por ambiente;
 - testes básicos e CI;
+- deploy seletivo de API e web no padrão compartilhado dos apps;
 - estrutura preparada para evoluir sem transformar o script em um gerador monolítico.
 
 O App Creator deve servir a dois fluxos:
@@ -85,14 +86,15 @@ python3 -m unittest discover -s tests -v
 Depois execute as verificações do README gerado: testes Django, lint/tipos,
 testes frontend, build isolada e autenticação real entre Next e Django.
 
-## Fundação visual 0.2.0
+## Fundação visual
 
-A versão 0.2.0 usa MUI + Emotion + Geist, identidade neutra e painéis opcionais.
+A versão 0.3.0 usa MUI + Emotion + Geist, identidade azul e painéis opcionais.
 Nome, navegação e cores ficam em `web/src/config/app.ts`. Padrões recorrentes
 ficam no tema MUI. Veja o [guia portátil](template/docs/frontend-guide.md),
 o [changelog](CHANGELOG.md) e a [validação](docs/frontend-validation.md).
 
-Aceite visual e validação complementar permanecem pendentes.
+App limpo validado com instalação, testes, build e autenticação real.
+O aceite visual permanece com o usuário.
 
 ## Evolução planejada
 

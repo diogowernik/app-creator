@@ -1,6 +1,52 @@
-# Guia do template
+# Padrão visual da família
 
 O guia distribuído com cada app está em
 [template/docs/frontend-guide.md](../template/docs/frontend-guide.md).
 A base é MUI + Emotion + Geist, consolidada em Logos a partir da Holding.
 Apps já gerados não recebem mudanças automaticamente.
+
+## Decisões para desenvolvimento
+
+Holding e Logos são referências complementares: Holding para organização de
+dados e operações compactas; Logos para identidade configurável, leitura e
+painéis opcionais. Aproveitar esses recursos sem copiar o domínio dos apps.
+
+- Usar MUI + Emotion + Geist diretamente, sem criar outra biblioteca de controles.
+- Preservar o CardHeader compacto, fontes agradáveis e hierarquia moderada,
+  com ações alinhadas à direita. Copiar, editar e salvar podem ser ícones com
+  tooltip e nome acessível; padronizar suas métricas no tema.
+- Recolhimento foi aprovado: acrescenta comportamento ao card existente,
+  sem mudar fonte, padding ou aparência do cabeçalho. Preservar conteúdo e
+  operações ao recolher.
+- A identidade inicial do starter deve ser azul ou verde. Cinza como identidade
+  principal foi rejeitado; superfícies e textos neutros continuam adequados.
+  Identidade vive na configuração, não em cores espalhadas pelos componentes.
+- Composição acompanha a tarefa: tabelas podem aproveitar a largura; leitura
+  usa largura confortável; catálogos podem mostrar capa e título sem card por
+  item. Não exigir abas, três colunas nem caixas aninhadas em todo recurso.
+- Painéis laterais são opcionais e devem ter função concreta. Explicações e
+  feedback só ocupam espaço quando ajudam a decidir ou agir.
+- Aparência comum pertence ao tema e aos componentes existentes. Uma regra
+  local em `styled` também é exceção visual; exige pedido explícito, não apenas
+  conveniência. Geometria funcional não autoriza redesenhar controles.
+
+## Espaçamento compartilhado
+
+Preferir intervalos compactos entre cards relacionados: 16px como ponto de
+partida, usando a escala do tema. Ajustar a composição conforme a tarefa e
+largura disponível, sem inventar distância por página. Separar áreas distintas
+pode exigir mais respiro. Usar um responsável pelo intervalo, evitando somar
+margem de cada card com gap do contêiner.
+
+Logos e o template usam `components/ui/CardLayout.tsx`: grade responsiva com
+intervalo de 16px, sem margem adicional dos cards. A referência é a grade de
+Bancos da Holding nova; a Holding usa outros intervalos em outras composições.
+Mudanças nesse espaçamento devem acontecer na composição compartilhada.
+
+O starter entrega identidade azul configurável, CardSection recolhível,
+PageContent centralizado, memória dos painéis e feedback temporário compartilhado.
+Essas capacidades são opcionais: o produto define a composição e o fluxo.
+O aceite visual continua com o usuário; valores e detalhes evidentes ficam no código.
+
+Esta é a referência da comparação entre apps; os guias de cada produto tratam
+de seu uso concreto. Valores atuais e detalhes evidentes permanecem no código.
