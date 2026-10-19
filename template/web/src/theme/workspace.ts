@@ -1,7 +1,21 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
+
+export const HeaderNavigation = styled(Box)({
+  display: "flex",
+  flex: 1,
+  minWidth: 0,
+  overflowX: "auto",
+}) as typeof Box;
+export const HeaderNavigationButton = styled(Button)(({ theme }) => ({
+  borderRadius: 20,
+  paddingInline: theme.spacing(2),
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  '&[aria-current="page"]': { backgroundColor: alpha(theme.app.headerText, 0.16) },
+})) as typeof Button;
 
 export const WorkspaceRoot = styled(Box)({
   height: "100dvh",

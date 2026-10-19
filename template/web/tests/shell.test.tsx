@@ -121,3 +121,20 @@ it("keeps mobile navigation open after a cancelled link and closes it with Escap
   );
   expect(screen.getByRole("button", { name: "Navegação" })).toHaveFocus();
 });
+
+it("closes plain mobile links only on ordinary navigation", async () => {
+  resize(390);
+  render(
+    <AppShell header={<Controls />} left={<a href="#projects">Projetos</a>}>
+      Conteúdo
+    </AppShell>,
+  );
+  const user = userEvent.setup();
+  await user.click(screen.getByRole("button", { name: "Navegação" }));
+  await user.keyboard("{Control>}");
+  await user.click(screen.getByRole("link", { name: "Projetos" }));
+  await user.keyboard("{/Control}");
+  expect(screen.getByRole("button", { name: "Fechar navegação" })).toBeVisible();
+  await user.click(screen.getByRole("link", { name: "Projetos" }));
+  await waitFor(() => expect(screen.queryByRole("button", { name: "Fechar navegação" })).not.toBeInTheDocument());
+});

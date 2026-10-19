@@ -28,6 +28,15 @@ export function SidebarIcon({ side = "left" }: { side?: "left" | "right" }) {
   );
 }
 
+export function HomeIcon() {
+  return (
+    <Icon>
+      <path d="m3 10 9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9Z" />
+      <path d="M9 21v-9h6v9" />
+    </Icon>
+  );
+}
+
 export function ComposeIcon() {
   return (
     <Icon>

@@ -9,6 +9,7 @@ import {
 } from "react";
 import { appConfig } from "@/config/app";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import {
   WorkspaceRoot,
   WorkspaceColumns,
@@ -24,10 +25,12 @@ type ShellState = {
   rightOpen: boolean;
   toggleLeft: () => void;
   toggleRight: () => void;
+  closeMobileNavigation: () => void;
   setRightOpen: (open: boolean) => void;
   rightHost: HTMLDivElement | null;
   setRightContext: (context: RightContext | null) => void;
   hasLeft: boolean;
+  navigationInSidebar: boolean;
   hasRight: boolean;
   rightLabel: string;
 };
@@ -40,6 +43,7 @@ export function useShell() {
 export function AppShell({
   children,
   header,
+  navigation,
   left,
   right,
   leftLabel = "Navegação",
@@ -47,15 +51,21 @@ export function AppShell({
 }: {
   children: ReactNode;
   header: ReactNode;
+  navigation?: ReactNode;
   left?: ReactNode;
   right?: ReactNode;
   leftLabel?: string;
   rightLabel?: string;
 }) {
+  const theme = useTheme();
+  const navigationWide = useMediaQuery(theme.breakpoints.up("xl"));
+  const navigationInSidebar = Boolean(navigation) && !navigationWide;
+  const hasLeft = Boolean(left) || navigationInSidebar;
   const desktop = useMediaQuery("(min-width: 761px)");
   const rightDocked = useMediaQuery("(min-width: 1100px)");
   const wide = useMediaQuery("(min-width: 1280px)");
   const [leftOverride, setLeft] = useState<boolean | null>(null);
+  const [mobileLeftOpen, setMobileLeftOpen] = useState(false);
   const [rightOverrides, setRightOverrides] = useState<Record<string, boolean>>({});
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
   useEffect(() => {
@@ -86,7 +96,7 @@ export function AppShell({
   const [rightHost, setHost] = useState<HTMLDivElement | null>(null);
   const rightOpen = right !== undefined && (rightOverrides[rightKey] ?? rightContext?.defaultOpen ?? wide);
   const leftOpen =
-    Boolean(left) && (leftOverride ?? desktop) && (desktop || !rightOpen);
+    hasLeft && (desktop ? (leftOverride ?? Boolean(left)) : mobileLeftOpen && !rightOpen);
   const attachHost = useCallback(
     (node: HTMLDivElement | null) => setHost(node),
     [],
@@ -94,7 +104,7 @@ export function AppShell({
   const setRightOpen = useCallback(
     (open: boolean) => {
       setRightOverrides((current) => ({ ...current, [rightKey]: open }));
-      if (!desktop && open) setLeft(false);
+      if (!desktop && open) setMobileLeftOpen(false);
     },
     [desktop, rightKey],
   );
@@ -102,17 +112,24 @@ export function AppShell({
     leftOpen,
     rightOpen,
     toggleLeft: () => {
-      setLeft(!leftOpen);
+      if (desktop) setLeft(!leftOpen);
+      else setMobileLeftOpen(!leftOpen);
       if (!desktop && !leftOpen) setRightOpen(false);
     },
+    closeMobileNavigation: () => setMobileLeftOpen(false),
     toggleRight: () => setRightOpen(!rightOpen),
     setRightOpen,
     rightHost,
     setRightContext,
-    hasLeft: Boolean(left),
+    hasLeft,
+    navigationInSidebar,
     hasRight: right !== undefined,
     rightLabel,
   };
+  function closeLeft() {
+    if (desktop) setLeft(false);
+    else setMobileLeftOpen(false);
+  }
   function panel(
     side: "left" | "right",
     content: ReactNode,
@@ -128,7 +145,7 @@ export function AppShell({
         variant={docked ? "permanent" : "temporary"}
         anchor={side}
         open={open}
-        onClose={() => (side === "left" ? setLeft(false) : setRightOpen(false))}
+        onClose={() => (side === "left" ? closeLeft() : setRightOpen(false))}
         slotProps={{
           root: { keepMounted: true },
           paper: {
@@ -141,7 +158,7 @@ export function AppShell({
         {!docked && (
           <PanelCloseButton
             variant="text"
-            onClick={() => (side === "left" ? setLeft(false) : setRightOpen(false))}
+            onClick={() => (side === "left" ? closeLeft() : setRightOpen(false))}
           >
             Fechar{" "}
             {side === "left"
@@ -165,18 +182,23 @@ export function AppShell({
       <WorkspaceRoot>
         {header}
         <WorkspaceColumns>
-          {left && (
+          {hasLeft && (
             <NavigationBoundary
               onClick={(event) => {
+                const link = (event.target as HTMLElement).closest("a[href]");
                 if (
                   !desktop &&
                   !event.defaultPrevented &&
-                  (event.target as HTMLElement).closest("a[href]")
+                  event.button === 0 &&
+                  !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey &&
+                  link &&
+                  !link.hasAttribute("download") &&
+                  (!link.getAttribute("target") || link.getAttribute("target") === "_self")
                 )
-                  setLeft(false);
+                  setMobileLeftOpen(false);
               }}
             >
-              {panel("left", left, leftOpen, leftLabel)}
+              {panel("left", <>{navigationInSidebar && navigation}{left}</>, leftOpen, leftLabel)}
             </NavigationBoundary>
           )}
           <WorkspaceMain component="main">{children}</WorkspaceMain>

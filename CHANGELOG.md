@@ -1,5 +1,14 @@
 # Changelog
 
+## Não publicado
+
+Navegação principal responsiva, com uma configuração de links e ícones para
+cabeçalho e lateral. Em telas largas o menu ocupa o cabeçalho; nas menores,
+o ícone abre a lateral existente. A preferência de abertura no desktop é
+preservada; no celular a navegação começa fechada e fecha ao seguir um link.
+Painéis personalizados continuam disponíveis. Apps existentes adotam a
+mudança explicitamente; consulte o guia da interface.
+
 ## 0.3.0 — implementação local até 13 de outubro de 2026
 
 Identidade inicial azul, Paper na superfície do CardHeader, grade com intervalo

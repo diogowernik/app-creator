@@ -5,6 +5,14 @@ O guia distribuído com cada app está em
 A base é MUI + Emotion + Geist, consolidada em Logos a partir da Holding.
 Apps já gerados não recebem mudanças automaticamente.
 
+O layout gerado usa a navegação responsiva da Holding: os mesmos links e
+ícones de `appConfig.navigation` aparecem no cabeçalho a partir de `xl` e na
+lateral recolhível abaixo disso. O shell preserva painéis próprios do produto,
+a preferência de abertura no desktop e o conteúdo central ao mudar de largura.
+No celular, a lateral inicia fechada e fecha após navegar. Integração e adoção
+em apps existentes estão no guia distribuído.
+Os resultados desta rodada estão no [registro de navegação](navigation-validation.md).
+
 ## Decisões para desenvolvimento
 
 Holding e Logos são referências complementares: Holding para organização de

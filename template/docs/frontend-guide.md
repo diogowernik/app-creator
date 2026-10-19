@@ -64,6 +64,35 @@ sucessão de cartões decorativos.
 
 ## Painéis
 
+O layout autenticado já conecta a navegação principal ao shell:
+
+```tsx
+<AppShell
+  header={<AppHeader />}
+  navigation={<AppNavigation variant="sidebar" />}
+>
+  {children}
+</AppShell>
+```
+
+`appConfig.navigation` é a fonte única de links nos dois formatos. Cada item
+aceita `label`, `href`, `icon` opcional (componente React) e `activePaths`
+opcional para outras rotas da mesma área. Rotas exatas e subrotas são marcadas
+com `aria-current="page"`; `/projects-other` não ativa `/projects`.
+
+A partir do breakpoint `xl` do tema (1536px), `AppHeader` mostra os links com
+ícones. Abaixo disso, o botão de navegação abre a lateral, inicialmente fechada.
+No desktop a lateral ocupa uma coluna e lembra a abertura; em mobile começa
+fechada, sobrepõe o conteúdo e fecha no `onNavigate` do Next Link. Cliques para
+abrir outra aba não fecham a navegação. O botão Sair permanece no cabeçalho.
+
+`navigation` fornece o menu responsivo; `left` acrescenta conteúdo próprio do
+produto à lateral, inclusive quando o menu principal está no cabeçalho. Ambos
+usam o mesmo controle de recolhimento. Omitir `navigation` permite manter uma
+composição personalizada, com o menu principal no cabeçalho. Apps existentes
+podem adotar o comportamento adicionando `AppNavigation` ao layout autenticado,
+junto das atualizações de `AppShell`, `AppHeader`, configuração, ícones e tema.
+
 ```tsx
 <AppShell
   header={<AppHeader />}
@@ -76,12 +105,16 @@ sucessão de cartões decorativos.
 </AppShell>
 ```
 
-Omitir `left`/`right` elimina aquele painel e seu controle no AppHeader.
+Omitir `left` e `navigation` elimina o painel esquerdo e seu controle;
+omitir `right` elimina o direito.
 `right={null}` configura um painel vazio que pode ser aberto. Um app simples
-começa apenas com cabeçalho e conteúdo; os painéis são capacidades disponíveis.
+começa com cabeçalho, conteúdo e navegação responsiva; painéis de produto são
+capacidades opcionais.
 
 `useShell()` expõe estado e controles sincronizados. A escolha de abrir ou
-fechar é persistida no navegador, isolada pelo `storagePrefix` do app.
+fechar a lateral no desktop é persistida no navegador, isolada pelo
+`storagePrefix` do app. Abrir ou fechar a navegação em mobile não altera essa
+preferência. `closeMobileNavigation()` fecha apenas a sobreposição esquerda.
 `setRightContext({ key, defaultOpen })` permite uma preferência por área;
 restaure `null` ao sair dela. `rightHost` permite que
 uma feature publique conteúdo contextual com `createPortal`, removido quando

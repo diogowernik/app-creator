@@ -1,19 +1,16 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { WtreeIcon } from "./icons/WtreeIcon";
 import { LogoutButton } from "./LogoutButton";
 import { SidebarIcon } from "./icons/NavigationIcons";
 import { appConfig } from "@/config/app";
-import { alpha } from "@mui/material/styles";
+import { AppNavigation } from "./AppNavigation";
 import { useShell } from "./shell/AppShell";
 export function AppHeader() {
-  const pathname = usePathname();
   const shell = useShell();
   return (
     <AppBar
@@ -47,41 +44,9 @@ export function AppHeader() {
         >
           <WtreeIcon width={78} />
         </Box>
-        <Box
-          component="nav"
-          aria-label="Navegação principal"
-          sx={{ display: "flex", flex: 1, minWidth: 0, overflowX: "auto" }}
-        >
-          {appConfig.navigation.map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/" ||
-                  item.activePaths.some((path) =>
-                    pathname.startsWith(`${path}/`),
-                  )
-                : pathname.startsWith(item.href);
-            return (
-              <Button
-                key={item.href}
-                component={Link}
-                href={item.href}
-                color="inherit"
-                variant="text"
-                aria-current={active ? "true" : undefined}
-                sx={(theme) => ({
-                  borderRadius: 20,
-                  px: 2,
-                  whiteSpace: "nowrap",
-                  bgcolor: active
-                    ? alpha(theme.app.headerText, 0.16)
-                    : undefined,
-                })}
-              >
-                {item.label}
-              </Button>
-            );
-          })}
-        </Box>
+        {shell.navigationInSidebar
+          ? <Box sx={{ flex: 1 }} />
+          : <AppNavigation variant="header" />}
         <LogoutButton />
         {shell.hasRight && (
           <IconButton
