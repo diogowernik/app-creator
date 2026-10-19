@@ -7,8 +7,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { appConfig } from "@/config/app";
-import { HeaderNavigation, HeaderNavigationButton } from "@/theme/workspace";
+import { HeaderNavigation, HeaderNavigationButton, NavigationFooter } from "@/theme/workspace";
 import { useShell } from "./shell/AppShell";
+import { LogoutButton } from "./LogoutButton";
 
 export function AppNavigation({ variant }: { variant: "header" | "sidebar" }) {
   const pathname = usePathname();
@@ -53,6 +54,9 @@ export function AppNavigation({ variant }: { variant: "header" | "sidebar" }) {
     );
   }
   return (
-    <List component="nav" aria-label="Navegação principal">{items}</List>
+    <>
+      <List component="nav" aria-label="Navegação principal">{items}</List>
+      {shell.navigationInSidebar && <NavigationFooter><LogoutButton /></NavigationFooter>}
+    </>
   );
 }

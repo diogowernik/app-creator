@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { appConfig } from "@/config/app";
+import { appConfig, type NavigationMode } from "@/config/app";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -44,26 +44,31 @@ export function AppShell({
   children,
   header,
   navigation,
+  navigationMode = appConfig.shell.navigation.mode,
+  leftDefaultOpen = appConfig.shell.navigation.defaultOpen,
   left,
-  right,
+  right = appConfig.shell.rightPanel.enabled ? null : undefined,
+  rightDefaultOpen = appConfig.shell.rightPanel.defaultOpen,
   leftLabel = "Navegação",
-  rightLabel = "Preview",
+  rightLabel = appConfig.shell.rightPanel.label,
 }: {
   children: ReactNode;
   header: ReactNode;
   navigation?: ReactNode;
+  navigationMode?: NavigationMode;
+  leftDefaultOpen?: boolean;
   left?: ReactNode;
   right?: ReactNode;
+  rightDefaultOpen?: boolean;
   leftLabel?: string;
   rightLabel?: string;
 }) {
   const theme = useTheme();
   const navigationWide = useMediaQuery(theme.breakpoints.up("xl"));
-  const navigationInSidebar = Boolean(navigation) && !navigationWide;
+  const navigationInSidebar = Boolean(navigation) && (navigationMode === "sidebar" || !navigationWide);
   const hasLeft = Boolean(left) || navigationInSidebar;
   const desktop = useMediaQuery("(min-width: 761px)");
   const rightDocked = useMediaQuery("(min-width: 1100px)");
-  const wide = useMediaQuery("(min-width: 1280px)");
   const [leftOverride, setLeft] = useState<boolean | null>(null);
   const [mobileLeftOpen, setMobileLeftOpen] = useState(false);
   const [rightOverrides, setRightOverrides] = useState<Record<string, boolean>>({});
@@ -94,9 +99,9 @@ export function AppShell({
   const [rightContext, setRightContext] = useState<RightContext | null>(null);
   const rightKey = rightContext?.key ?? "default";
   const [rightHost, setHost] = useState<HTMLDivElement | null>(null);
-  const rightOpen = right !== undefined && (rightOverrides[rightKey] ?? rightContext?.defaultOpen ?? wide);
+  const rightOpen = right !== undefined && (rightOverrides[rightKey] ?? rightContext?.defaultOpen ?? rightDefaultOpen);
   const leftOpen =
-    hasLeft && (desktop ? (leftOverride ?? Boolean(left)) : mobileLeftOpen && !rightOpen);
+    hasLeft && (desktop ? (leftOverride ?? leftDefaultOpen) : mobileLeftOpen && !rightOpen);
   const attachHost = useCallback(
     (node: HTMLDivElement | null) => setHost(node),
     [],

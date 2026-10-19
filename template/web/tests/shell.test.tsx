@@ -55,7 +55,7 @@ function Editor() {
     />
   );
 }
-function Workspace() {
+function Workspace({ rightDefaultOpen = true }: { rightDefaultOpen?: boolean }) {
   return (
     <AppShell
       header={<Controls />}
@@ -65,6 +65,8 @@ function Workspace() {
         </a>
       }
       right={null}
+      leftDefaultOpen
+      rightDefaultOpen={rightDefaultOpen}
     >
       <Editor />
     </AppShell>
@@ -106,7 +108,7 @@ it("keeps the same editor and draft while panels collapse and the viewport chang
 });
 it("keeps mobile navigation open after a cancelled link and closes it with Escape", async () => {
   resize(390);
-  render(<Workspace />);
+  render(<Workspace rightDefaultOpen={false} />);
   const user = userEvent.setup();
   await user.click(screen.getByRole("button", { name: "Navegação" }));
   await user.click(screen.getByRole("link", { name: "Navegação cancelada" }));

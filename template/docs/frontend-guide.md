@@ -11,7 +11,7 @@ cores em cada página.
 
 ## Onde mudar cada padrão
 
-- `web/src/config/app.ts`: nome, navegação e identidade do app. `primary`
+- `web/src/config/app.ts`: nome, navegação, opções do shell e identidade do app. `primary`
   define os controles, `header`/`headerText` a barra e `cardTitle` os títulos.
 - `web/src/theme/index.ts`: escala de fontes, superfícies neutras, raio e
   larguras dos painéis. Erro usa a paleta laranja, preservando contraste.
@@ -84,7 +84,37 @@ A partir do breakpoint `xl` do tema (1536px), `AppHeader` mostra os links com
 ícones. Abaixo disso, o botão de navegação abre a lateral, inicialmente fechada.
 No desktop a lateral ocupa uma coluna e lembra a abertura; em mobile começa
 fechada, sobrepõe o conteúdo e fecha no `onNavigate` do Next Link. Cliques para
-abrir outra aba não fecham a navegação. O botão Sair permanece no cabeçalho.
+abrir outra aba não fecham a navegação. Sair aparece no cabeçalho quando o menu
+está nele e no rodapé da lateral quando a navegação está na lateral.
+
+### Defaults e opções do template
+
+As escolhas iniciais ficam explícitas em `appConfig.shell`:
+
+```ts
+shell: {
+  navigation: { mode: "responsive", defaultOpen: false },
+  rightPanel: { enabled: false, defaultOpen: false, label: "Preview" },
+}
+```
+
+| Opção | Padrão | Alternativa |
+| --- | --- | --- |
+| `navigation.mode` | `"responsive"`: menu no cabeçalho em telas largas; botão lateral nas menores | `"sidebar"`: menu lateral e seu botão disponíveis em qualquer largura |
+| `navigation.defaultOpen` | `false`: lateral inicialmente recolhida | `true`: iniciar aberta no desktop quando houver lateral |
+| `rightPanel.enabled` | `false`: sem painel nem ícone direito | `true`: disponibilizar um painel vazio para conteúdo contextual |
+| `rightPanel.defaultOpen` | `false`: painel habilitado começa fechado | `true`: iniciar o painel habilitado aberto |
+
+Manter o botão disponível em todas as larguras e iniciar o painel aberto são
+decisões independentes. Preferências já salvas prevalecem sobre `defaultOpen`.
+A navegação no celular sempre inicia fechada. O app gerado mantém o modo
+responsivo e o painel direito desligado, como ponto de partida simples.
+
+`AppShell` também aceita `navigationMode`, `leftDefaultOpen`, `rightDefaultOpen`
+e `rightLabel` para sobrescrever essas escolhas em uma composição específica.
+Fornecer `left` acrescenta um painel personalizado, inicialmente recolhido;
+fornecer `right` (inclusive `null`) habilita explicitamente o direito naquela
+composição, mesmo com `rightPanel.enabled: false` na configuração global.
 
 `navigation` fornece o menu responsivo; `left` acrescenta conteúdo próprio do
 produto à lateral, inclusive quando o menu principal está no cabeçalho. Ambos
@@ -106,7 +136,7 @@ junto das atualizações de `AppShell`, `AppHeader`, configuração, ícones e t
 ```
 
 Omitir `left` e `navigation` elimina o painel esquerdo e seu controle;
-omitir `right` elimina o direito.
+omitir `right` deixa a configuração global decidir se o direito existe.
 `right={null}` configura um painel vazio que pode ser aberto. Um app simples
 começa com cabeçalho, conteúdo e navegação responsiva; painéis de produto são
 capacidades opcionais.
@@ -124,8 +154,8 @@ O host do painel pode ser refeito ao trocar entre coluna e sobreposição,
 e o portal acompanha o novo host sem transferir estado do editor.
 
 A lateral esquerda mede 260px e a direita 360px. Desktop começa em 761px;
-o direito abre por padrão a partir de 1280px e ocupa uma coluna a partir de
-1100px; abaixo disso usa sobreposição para preservar a área central.
+o direito, quando habilitado e aberto, ocupa uma coluna a partir de 1100px;
+abaixo disso usa sobreposição para preservar a área central.
 Em mobile, Drawer temporário cuida de backdrop, Escape, foco e retorno ao controle; um painel abre por vez.
 Links cuja navegação foi cancelada não fecham a lateral. O menu e o preview
 rolam independentemente da área central. Resize por arrastar é evolução futura.

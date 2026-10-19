@@ -16,6 +16,11 @@ export const HeaderNavigationButton = styled(Button)(({ theme }) => ({
   whiteSpace: "nowrap",
   '&[aria-current="page"]': { backgroundColor: alpha(theme.app.headerText, 0.16) },
 })) as typeof Button;
+export const NavigationFooter = styled(Box)(({ theme }) => ({
+  marginTop: "auto",
+  padding: theme.spacing(2),
+  order: 1,
+}));
 
 export const WorkspaceRoot = styled(Box)({
   height: "100dvh",

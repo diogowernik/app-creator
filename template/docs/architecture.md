@@ -57,5 +57,9 @@ configurável. Nome, links e identidade configurável vêm de `web/src/config/ap
 `AppNavigation` usa esses mesmos links e ícones no cabeçalho e na lateral;
 o layout autenticado conecta o menu responsivo ao `AppShell`. A preferência
 de abertura no desktop é independente da abertura temporária no celular.
+`appConfig.shell` explicita os defaults: navegação responsiva, lateral
+inicialmente recolhida e painel direito desligado. Navegação sempre lateral,
+painel direito e abertura inicial são opções independentes. Sair acompanha
+o local do menu principal.
 MUI deriva os estados dos controles; as composições preservam a família visual
 da Holding e de Logos. Consulte o [guia](frontend-guide.md).

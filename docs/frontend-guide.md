@@ -11,6 +11,11 @@ lateral recolhível abaixo disso. O shell preserva painéis próprios do produto
 a preferência de abertura no desktop e o conteúdo central ao mudar de largura.
 No celular, a lateral inicia fechada e fecha após navegar. Integração e adoção
 em apps existentes estão no guia distribuído.
+O modo responsivo é o default. `appConfig.shell` permite optar pelo menu lateral
+em qualquer largura e pela abertura inicial dos painéis. O direito fica
+desabilitado por padrão; habilitá-lo e abri-lo inicialmente são opções distintas.
+Sair acompanha a navegação: cabeçalho em telas largas e rodapé da lateral nas
+menores (ou em qualquer largura no modo `sidebar`).
 Os resultados desta rodada estão no [registro de navegação](navigation-validation.md).
 
 ## Decisões para desenvolvimento
@@ -34,6 +39,8 @@ painéis opcionais. Aproveitar esses recursos sem copiar o domínio dos apps.
   item. Não exigir abas, três colunas nem caixas aninhadas em todo recurso.
 - Painéis laterais são opcionais e devem ter função concreta. Explicações e
   feedback só ocupam espaço quando ajudam a decidir ou agir.
+- Toda capacidade do template deve declarar seu default e como habilitar suas
+  alternativas. A existência de um recurso não o torna obrigatório no app gerado.
 - Aparência comum pertence ao tema e aos componentes existentes. Uma regra
   local em `styled` também é exceção visual; exige pedido explícito, não apenas
   conveniência. Geometria funcional não autoriza redesenhar controles.

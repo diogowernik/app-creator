@@ -9,10 +9,23 @@ export type NavigationItem = {
   icon?: ComponentType;
 };
 
+export type NavigationMode = "responsive" | "sidebar";
+
 export const appConfig = {
   name: "__APP_NAME__",
   storagePrefix: "__APP_SLUG__",
   navigation: [{ label: "Início", href: "/", icon: HomeIcon }] as NavigationItem[],
+  shell: {
+    navigation: {
+      mode: "responsive" as NavigationMode,
+      defaultOpen: false,
+    },
+    rightPanel: {
+      enabled: false,
+      defaultOpen: false,
+      label: "Preview",
+    },
+  },
   identity: {
     primary: { main: "#1976d2", dark: "#115293", light: "#4791db" },
     header: "#1976d2",

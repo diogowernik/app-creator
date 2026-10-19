@@ -42,6 +42,9 @@ A logo Wtree branca é comum aos apps. Nome, navegação e identidade configurá
 ficam em `web/src/config/app.ts`; controles e superfícies seguem o tema MUI.
 Os mesmos links e ícones aparecem no cabeçalho em telas largas e na lateral
 recolhível nas menores. O layout autenticado já faz essa integração.
+Sair acompanha o menu. Em `appConfig.shell`, é possível optar pela lateral em
+qualquer largura e habilitar o painel direito; o padrão é responsivo, com o
+painel direito desligado e laterais inicialmente recolhidas.
 Consulte [docs/frontend-guide.md](docs/frontend-guide.md) para alterar padrões
 e acrescentar painéis opcionais sem copiar estilos de uma tela para outra.
 

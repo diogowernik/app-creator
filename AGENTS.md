@@ -8,3 +8,6 @@
 - Atualizações principais exigem geração limpa de um app de teste e validação completa.
 - O gerador nunca deve sobrescrever um destino existente.
 - Não adicione funcionalidades de produto ao starter sem uma necessidade transversal comprovada.
+- Ao acrescentar capacidades ao template, declare seus defaults e as alternativas
+  opcionais na configuração e no guia. Recursos disponíveis não devem virar
+  obrigatórios: navegação responsiva por padrão e painel direito desabilitado.

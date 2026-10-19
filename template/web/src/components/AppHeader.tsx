@@ -47,7 +47,7 @@ export function AppHeader() {
         {shell.navigationInSidebar
           ? <Box sx={{ flex: 1 }} />
           : <AppNavigation variant="header" />}
-        <LogoutButton />
+        {!shell.navigationInSidebar && <LogoutButton />}
         {shell.hasRight && (
           <IconButton
             color="inherit"
