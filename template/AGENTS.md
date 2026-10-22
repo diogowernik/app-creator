@@ -10,8 +10,8 @@
 - Valide builds com `NEXT_DIST_DIR=.next-codex` para preservar o servidor dev.
 - Leia `docs/architecture.md`; acrescente documentação de produto antes do domínio.
 - Não copie dados, segredos ou dependências de projetos de referência.
-- Leia `docs/deployment.md` antes de alterar produção. Commit, push e deploy
-  são ações distintas; publique apenas quando o usuário pedir.
+- Leia `docs/deployment.md` antes de commit, push ou publicação. São ações
+  distintas e dependem do pedido do usuário; substituição do banco também.
 
 ## Interface
 

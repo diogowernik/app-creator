@@ -23,7 +23,7 @@ on:
         type: boolean
 
 concurrency:
-  group: __APP_SLUG__-deploy-${{ github.event.inputs.target || github.ref_name }}
+  group: __APP_SLUG__-production-deploy
   cancel-in-progress: false
 
 jobs:

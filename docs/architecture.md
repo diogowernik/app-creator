@@ -135,7 +135,7 @@ O frontend não deve executar atualizações arbitrárias por conta própria. A 
 
 ## Deploy da aplicação gerada
 
-O template inclui o fluxo comprovado por Holding e Logos: checkout próprio,
+Holding é o padrão oficial de commit, push e deploy do template: checkout próprio,
 Next e Django em processos PM2 distintos, API no loopback, Nginx na borda e
 GitHub Actions com alvos `all`, `api` e `web`. Domínio e portas não pertencem à
 fundação e são definidos somente no `deploy.env` da instalação. O gerador não
@@ -143,7 +143,10 @@ aloca infraestrutura, cria DNS, certificados, chaves ou segredos.
 
 A `main` permanece como única branch de trabalho. As referências remotas
 `deploy-*` existem apenas como gatilho; instalação de dependências é explícita
-e separada do deploy cotidiano.
+e separada do deploy cotidiano. O CI roda em `main` e PRs, com backend e
+frontend separados e autenticação integrada. Todos os alvos de deploy usam
+uma fila única por app; publicação continua independente do CI. Os contratos
+operacionais estão em `template/docs/deployment.md`.
 
 ## Segurança operacional
 

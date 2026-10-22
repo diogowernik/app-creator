@@ -1,5 +1,9 @@
 name: Starter
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 jobs:
   generated-app:
     runs-on: ubuntu-latest
@@ -16,11 +20,11 @@ jobs:
       - run: bash create-app.sh ci-app --destination .validation --mode migration
       - run: .venv/bin/ruff check api
         working-directory: .validation/ci-app
-      - run: .venv/bin/python api/manage.py test
-        working-directory: .validation/ci-app
+      - run: ../.venv/bin/python manage.py test
+        working-directory: .validation/ci-app/api
         env:
           DJANGO_ENV: development
-      - run: npm run lint && npm test && npm run typecheck && npm run build
+      - run: npm run typecheck && npm run lint && npm test && npm run build
         working-directory: .validation/ci-app/web
         env:
           NEXT_DIST_DIR: .next-codex
