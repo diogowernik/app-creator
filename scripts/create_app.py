@@ -46,7 +46,10 @@ def create_app(slug: str, destination: Path, mode: str = "new") -> Path:
         }
         for path in target.rglob("*"):
             if path.is_file():
-                content = path.read_text(encoding="utf-8")
+                try:
+                    content = path.read_text(encoding="utf-8")
+                except UnicodeDecodeError:
+                    continue
                 for token, value in replacements.items():
                     content = content.replace(token, value)
                 path.write_text(content, encoding="utf-8")

@@ -63,3 +63,10 @@ painel direito e abertura inicial são opções independentes. Sair acompanha
 o local do menu principal.
 MUI deriva os estados dos controles; as composições preservam a família visual
 da Holding e de Logos. Consulte o [guia](frontend-guide.md).
+
+## Instalação e continuidade
+
+O PWA usa manifesto, ícones públicos e service worker com cache restrito.
+A retomada por conta é configurável e o desbloqueio do dispositivo é opcional,
+com verificação WebAuthn no Django e preservação de rascunhos. Consulte os
+[defaults, alternativas e contratos](pwa.md) antes de estender rotas ou cache.

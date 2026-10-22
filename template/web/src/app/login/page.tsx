@@ -1,3 +1,4 @@
+import { appConfig } from "@/config/app";
 import { redirect } from "next/navigation";
 import { fetchCurrentUser } from "@/server/django";
 import Box from "@mui/material/Box";
@@ -6,8 +7,9 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import { LoginForm } from "@/components/LoginForm";
 
-export default async function LoginPage() {
-  if (await fetchCurrentUser()) redirect("/");
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
+  const destination = (await searchParams).next === "/pwa" ? "/pwa" : "/";
+  if (await fetchCurrentUser()) redirect(destination);
   return (
     <Box
       component="main"
@@ -15,11 +17,11 @@ export default async function LoginPage() {
     >
       <Card component="section" sx={{ width: "100%", maxWidth: 380 }}>
         <CardHeader
-          title="__APP_NAME__"
+          title={appConfig.name}
           slotProps={{ title: { component: "h1", variant: "h6" } }}
         />
         <CardContent>
-          <LoginForm />
+          <LoginForm destination={destination} />
         </CardContent>
       </Card>
     </Box>

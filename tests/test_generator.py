@@ -62,10 +62,16 @@ class GeneratorTests(unittest.TestCase):
         self.assertEqual(json.loads((app / "web/package.json").read_text())["name"], "test-app-web")
         for path in app.rglob("*"):
             if path.is_file():
-                content = path.read_text()
+                try:
+                    content = path.read_text()
+                except UnicodeDecodeError:
+                    continue
                 self.assertNotIn("__APP_", content, str(path))
                 self.assertNotIn(str(ROOT), content, str(path))
         self.assertEqual(json.loads((app / ".app-creator.json").read_text())["mode"], "new")
+        for name in ["pwa-192.png", "pwa-512.png", "pwa-maskable-512.png", "apple-touch-icon.png"]:
+            relative = Path("web/public/icons") / name
+            self.assertEqual((app / relative).read_bytes(), (ROOT / "template" / relative).read_bytes())
         self.assertFalse((app / "api/.env").exists())
         self.assertFalse((app / ".git").exists())
 

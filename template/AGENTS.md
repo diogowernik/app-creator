@@ -21,3 +21,10 @@
 - Sem estilos inline ou exceções visuais por página, salvo pedido explícito do usuário.
 - CSS local somente para conteúdo especializado; não redesenhar controles.
 - Não reintroduza controles nativos estilizados nem uma segunda base visual.
+
+## PWA e privacidade
+
+- Leia `docs/pwa.md` antes de estender retomada, cache ou desbloqueio.
+- Não cacheie páginas, sessões ou APIs privadas no service worker.
+- Rotas dinâmicas retomáveis precisam de verificação de acesso no Django.
+- Preserve rascunhos e portais ao bloquear; não ative desbloqueio por padrão.

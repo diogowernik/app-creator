@@ -12,6 +12,7 @@ DEBUG, SECRET_KEY, ALLOWED_HOSTS = runtime_settings()
 PRODUCTION = os.getenv("DJANGO_ENV", "production") == "production"
 
 INSTALLED_APPS = [
+    "device_security",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -83,3 +84,6 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
 }
 DJOSER = {"PERMISSIONS": {"user_create": ["rest_framework.permissions.IsAdminUser"]}}
+
+# Configure exact public origins when deploying this app.
+WEBAUTHN_ALLOWED_ORIGINS = env_list("WEBAUTHN_ALLOWED_ORIGINS", "http://localhost:3000")

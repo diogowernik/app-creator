@@ -185,3 +185,11 @@ Execute lint, tipos, testes e build com `NEXT_DIST_DIR=.next-codex`. Preserve
 os testes de autenticação em `scripts/test_auth.py`. Mudanças no shell exigem
 checar rascunho, navegação cancelada, foco e viewport; mudanças no template
 exigem gerar um app limpo e validar sua independência.
+
+## Instalação e bloqueio
+
+Instalar acompanha a posição da navegação. O guia usa os controles MUI padrão
+e um ícone público. O desbloqueio usa diálogo fullscreen; `theme/device-lock.ts`
+oculta a interface e os portais sem desmontar editores. Esses estilos são
+geometria funcional de privacidade, sem versões próprias dos controles.
+Os defaults e limites estão no [guia de PWA](pwa.md).

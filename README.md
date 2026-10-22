@@ -11,6 +11,7 @@ Gerar uma aplicação pronta para desenvolvimento com:
 - login conectado entre frontend e backend;
 - configuração local por ambiente;
 - testes básicos e CI;
+- PWA instalável, retomada por conta e desbloqueio opcional do dispositivo;
 - deploy seletivo de API e web no padrão compartilhado dos apps;
 - estrutura preparada para evoluir sem transformar o script em um gerador monolítico.
 

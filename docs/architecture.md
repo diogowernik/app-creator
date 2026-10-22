@@ -164,3 +164,17 @@ existentes, instala dependências e migra o banco local; não cria usuários.
 `--skip-setup` gera somente arquivos. Uma falha na cópia remove somente a pasta criada pela
 invocação; uma falha na preparação preserva o código e retorna erro para permitir
 retomada. O modo `migration` acrescenta documentação, sem importar dados.
+
+## PWA e desbloqueio nos apps gerados
+
+O template inclui instalação nativa, guia iOS, cache exclusivo de recursos
+públicos e continuidade de navegação por conta. O gerador preserva assets
+binários sem substituição textual. Os ícones neutros derivam da marca Wtree do
+próprio template; não são ícones de produtos dos projetos de referência.
+
+O default retoma somente `/`; `appConfig.pwa.resumePaths` cadastra outras
+páginas estáticas. Recursos dinâmicos exigem política de autorização no Django,
+integrada em `src/server/pwa.ts`, sem incorporar domínio de apps específicos.
+`appConfig.deviceLock.available` disponibiliza o desbloqueio por padrão, mas
+a preferência de cada usuário começa desativada e pode ser removida do app.
+Os contratos e alternativas ficam no [guia gerado](../template/docs/pwa.md).

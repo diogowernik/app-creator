@@ -110,3 +110,10 @@ cp web/.env.local.example web/.env.local
 Configure o Nginx para a porta web definida, valide os endpoints internos,
 aponte o DNS e emita o certificado. Execute `pm2 save`; não crie outro daemon
 PM2 quando a máquina já possuir o serviço do usuário de aplicação.
+
+## Instalação do PWA e WebAuthn
+
+Configure `WEBAUTHN_ALLOWED_ORIGINS` em `api/.env` com a origem HTTPS exata do
+app. O default do template é somente `http://localhost:3000`. A primeira
+publicação dessa capacidade exige dependências de API e web e migrations de
+`device_security`: use `all` com instalação habilitada. Veja o [guia de PWA](pwa.md).

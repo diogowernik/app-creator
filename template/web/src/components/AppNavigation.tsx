@@ -9,6 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { appConfig } from "@/config/app";
 import { HeaderNavigation, HeaderNavigationButton, NavigationFooter } from "@/theme/workspace";
 import { useShell } from "./shell/AppShell";
+import { InstallAppButton } from "./pwa/InstallAppButton";
 import { LogoutButton } from "./LogoutButton";
 
 export function AppNavigation({ variant }: { variant: "header" | "sidebar" }) {
@@ -56,7 +57,7 @@ export function AppNavigation({ variant }: { variant: "header" | "sidebar" }) {
   return (
     <>
       <List component="nav" aria-label="Navegação principal">{items}</List>
-      {shell.navigationInSidebar && <NavigationFooter><LogoutButton /></NavigationFooter>}
+      {shell.navigationInSidebar && <NavigationFooter><InstallAppButton /><LogoutButton /></NavigationFooter>}
     </>
   );
 }

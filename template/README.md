@@ -81,3 +81,6 @@ O template inclui deploy seletivo de API e web pelo GitHub Actions, no padrão
 de Holding e Logos. Reserve domínio e portas próprios antes da primeira
 publicação e siga o [guia de deploy](docs/deployment.md). Consulte também a
 [arquitetura](docs/architecture.md).
+
+A instalação como app, retomada por conta e desbloqueio opcional estão no
+[guia de PWA](docs/pwa.md).

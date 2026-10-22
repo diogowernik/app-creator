@@ -14,6 +14,12 @@ export type NavigationMode = "responsive" | "sidebar";
 export const appConfig = {
   name: "__APP_NAME__",
   storagePrefix: "__APP_SLUG__",
+  pwa: {
+    resumePaths: ["/"] as string[],
+  },
+  deviceLock: {
+    available: true,
+  },
   navigation: [{ label: "Início", href: "/", icon: HomeIcon }] as NavigationItem[],
   shell: {
     navigation: {

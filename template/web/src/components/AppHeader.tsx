@@ -9,6 +9,8 @@ import { LogoutButton } from "./LogoutButton";
 import { SidebarIcon } from "./icons/NavigationIcons";
 import { appConfig } from "@/config/app";
 import { AppNavigation } from "./AppNavigation";
+import { InstallAppButton } from "./pwa/InstallAppButton";
+import { DeviceLockAction } from "@/features/device-lock/DeviceLockProvider";
 import { useShell } from "./shell/AppShell";
 export function AppHeader() {
   const shell = useShell();
@@ -47,6 +49,8 @@ export function AppHeader() {
         {shell.navigationInSidebar
           ? <Box sx={{ flex: 1 }} />
           : <AppNavigation variant="header" />}
+        {!shell.navigationInSidebar && <InstallAppButton />}
+        <DeviceLockAction />
         {!shell.navigationInSidebar && <LogoutButton />}
         {shell.hasRight && (
           <IconButton
